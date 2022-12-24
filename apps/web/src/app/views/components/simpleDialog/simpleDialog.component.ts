@@ -81,6 +81,8 @@ export class SimpleDialogComponent {
     // translate message
     if (Array.isArray(message)) {
       this.message = this.translate.instant(message[0], message[1]);
+    } else {
+      this.message = message;
     }
 
     // set dialog parts

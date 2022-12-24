@@ -52,8 +52,7 @@ export class RoomAccessMngComponent implements OnInit {
   // ※ 引数の data が null なら追加、null でなければ更新する
   async regRoomAccessMng(data: any) {
     // 入退室日時登録用のダイアログ表示
-    const modalRef = this.modalService.open(SimpleDialogComponent, { backdrop: 'static' });
-    const dialog = modalRef.componentInstance as SimpleDialogComponent;
+    const dialog = this.simpleDialog.open();
     dialog.title = 'Register room access datetime';
     dialog.message = '';
     dialog.items = [
@@ -69,7 +68,7 @@ export class RoomAccessMngComponent implements OnInit {
     ];
 
     // ダイアログの実行待ち
-    const result = await modalRef.result;
+    const result = await dialog.wait();
     if (result !== 'ok') { return; }
 
     // 再検索

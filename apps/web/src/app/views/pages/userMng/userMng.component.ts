@@ -48,8 +48,7 @@ export class UserMngComponent implements OnInit {
   // ※ 引数の user が null なら追加、null でなければ更新する
   async regUser(data: any) {
     // ユーザ登録用のダイアログ表示
-    const modalRef = this.modalService.open(SimpleDialogComponent, { backdrop: 'static' });
-    const dialog = modalRef.componentInstance as SimpleDialogComponent;
+    const dialog = this.simpleDialog.open();
     dialog.title = 'Register user';
     dialog.message = '';
     dialog.items = [
@@ -66,7 +65,7 @@ export class UserMngComponent implements OnInit {
     ];
 
     // ダイアログの実行待ち
-    const result = await modalRef.result;
+    const result = await dialog.wait();
     if (result !== 'ok') { return; }
 
     // 再検索
