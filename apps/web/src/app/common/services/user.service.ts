@@ -45,7 +45,7 @@ export class UserService {
       const hashedPassword = crypto.SHA512(password).toString();
 
       // トークン生成APIの呼び出し
-      const ret: any = await this.http.post('api/common/auth/createtoken', { userCode: userCode, password: hashedPassword });
+      const ret: any = await this.http.post('api/createToken', { userCode: userCode, password: hashedPassword });
       if (ret.message) {
           alert(ret.message);
           return;

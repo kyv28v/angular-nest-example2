@@ -14,35 +14,35 @@ export class AuthService {
   ) {}
 
   async createToken(
-    userid,
+    userCode,
     password,
   ): Promise<AuthToken> {
     try {
-      console.log('createToken(userid:' + userid + ', password:' + password);
+      console.log('createToken(userCode:' + userCode + ', password:' + password);
 
-      if (!userid) {
-        throw new Error('Invalid id');
+      if (!userCode) {
+        throw new Error('Invalid user code.');
       }
 
       // DB接続
       await this.db.connect();
 
       // SQL実行
-      const data = await this.db.query('SELECT * FROM users WHERE id = $1', [ userid ]);
+      const data = await this.db.query('SELECT * FROM users WHERE code = $1', [ userCode ]);
 
       // ユーザが見つからない場合はエラー
       if (data.rows.length === 0) {
-        throw new Error('Invalid id or password');
+        throw new Error('Invalid user code.');
       }
 
       // パスワード不一致の場合はエラー
       if (data.rows[0].password !== password) {
-        throw new Error('Invalid id or password');
+        throw new Error('Invalid id or password.');
       }
 
       // アクセストークンの取得
       const accessToken = jwt.sign(
-        { userid: userid },
+        { userid: data.rows[0].id },
         environment.tokenConf.accessTokenSecretKey,
         {
           algorithm: environment.tokenConf.algorithm,
@@ -51,7 +51,7 @@ export class AuthService {
 
       // リフレッシュトークンの取得
       const refreshToken = jwt.sign(
-        { userid: userid },
+        { userid: data.rows[0].id },
         environment.tokenConf.refreshTokenSecretKey,
         {
           algorithm: environment.tokenConf.algorithm,

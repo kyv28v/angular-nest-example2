@@ -15,7 +15,7 @@ export class AuthController {
     @Body() body: any,
   ): Promise<AuthToken> {
     return await this.auth.createToken(
-      body.userid,
+      body.userCode,
       body.password,
     );
   }
