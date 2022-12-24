@@ -1,0 +1,29 @@
+// Light theme
+$light-primary: mat-palette($mat-grey, 300, 600, 400);
+$light-accent:  mat-palette($mat-brown, 300);
+$light-warn:    mat-palette($mat-deep-orange, 300);
+
+$light-theme:   mat-light-theme($light-primary, $light-accent, $light-warn);
+
+.light-theme {
+    @include angular-material-theme($light-theme)
+}
+
+// Class to use when specifying colors individually
+$light-foreground-palette: map-get($light-theme, foreground);
+$light-background-palette: map-get($light-theme, background);
+
+.light-theme-color {
+    background-color : mat-color($light-background-palette, background)!important;
+    color: mat-color($light-foreground-palette, text)!important;
+}
+
+.light-theme-primary {
+    background-color : mat-color($light-primary)!important;
+    color: black!important;
+}
+
+.light-theme-spinner {
+    // background-color : mat-color($light-background-palette, background, .28)!important;
+    color: mat-color($light-primary)!important;
+}

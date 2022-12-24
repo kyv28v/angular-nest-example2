@@ -57,5 +57,165 @@
     "Do you want to register room access datetime?": "入退室日時を登録します。よろしいですか？",
     "Do you want to delete room access datetime?": "入退室日時を削除します。よろしいですか？",
     "--- Other ---": "--- その他 ---",
-    "View All": "View All"
+    "View All": "View All",
+    
+    "search": "検索",
+    "register": "登録",
+    "add": "追加",
+    "update": "更新",
+    "delete": "削除",
+    "ok": "OK",
+    "cancel": "キャンセル",
+    "confirm": "確認",
+    "error": "エラー",
+    "leavePage": "このページを離れてもよろしいですか？\n行った変更が保存されない可能性があります。",
+    "refreshPage": "最新のデータを表示します。よろしいですか？\n行った変更が保存されない可能性があります。",
+    "requiredError": "入力必須です。",
+    "login": {
+        "login": "ログイン",
+        "logout": "ログアウト",
+        "logoutConfirm": "ログアウトします。よろしいですか？",
+        "userId": "ユーザID",
+        "userCode": "ユーザID",
+        "password": "パスワード",
+        "enterUserId": "ユーザIDを入力してください",
+        "enterPassword": "パスワードを入力してください",
+        "adminLogin": "管理ユーザーでログイン",
+        "guestLogin": "ゲストユーザーでログイン",
+        "sessionExpired": "セッションの有効期限が切れました。\nもう一度ログインしてください。"
+    },
+    "topMenu": {
+        "language": "言語",
+        "japanese": "日本語",
+        "english": "英語",
+        "userManage": "ユーザ管理",
+        "changePassword": "パスワード変更",
+        "theme": "テーマ"
+    },
+    "sideMenu": {
+        "name": "名称",
+        "menu": "メニュー",
+        "subMenu": "サブメニュー",
+        "settings": "設定",
+        "profile": "プロフィール",
+        "userId": "ユーザID",
+        "addMenu": "メニュー作成",
+        "createNewMenu": "新規メニュー作成",
+        "newMenu": "新規メニュー",
+        "scopeType": "スコープ",
+        "appendExistingMenu": "既存メニューの追加",
+        "addFolder": "フォルダ作成",
+        "newFolder": "新規フォルダ",
+        "addPage": "ページ作成",
+        "newPage": "新規ページ",
+        "deletePage": "ページ削除",
+        "deletePageConfirm": "ページを削除しますか？",
+        "deleteFolder": "フォルダ削除",
+        "deleteFolderConfirm": "フォルダを削除しますか？\n配下のアイテムもすべて削除されます。",
+        "releaseMenu": "メニュー解除",
+        "releaseMenuConfirm": "メニューを解除しますか？\n表示されなくなるだけで、削除されるわけではありません。\n「既存メニューの追加」からいつでも再表示させることができます。",
+        "deleteMenu": "メニュー削除",
+        "deleteMenuConfirm": "メニューを削除しますか？\n配下のアイテムもすべて削除されます。\n参照しているすべてのユーザから削除されます。",
+        "property": "プロパティ",
+        "pageType": "ページタイプ",
+        "createUserName": "作成者名",
+        "rootMenuMoveError": "ルートメニューは、他のメニューへの移動はできません。",
+        "outOfRootMenuError": "ルートメニューの外への移動はできません。"
+    },
+    "user": {
+        "userManage": "ユーザ管理",
+        "id": "ID",
+        "code": "ID",
+        "name": "名前",
+        "age": "年齢",
+        "sex": "性別",
+        "sexDisp": "性別",
+        "birthday": "誕生日",
+        "birthdayDisp": "誕生日",
+        "password": "パスワード",
+        "note": "備考",
+        "auth": "権限",
+        "registerUser": "ユーザ登録",
+        "registerConfirm": "ユーザを登録します。よろしいですか？",
+        "deleteUser": "ユーザ削除",
+        "deleteConfirm": "ユーザを削除します。よろしいですか？",
+        "changePassword": "パスワード変更",
+        "changePasswordConfirm": "パスワードを変更します。よろしいですか？",
+        "oldPassword": "以前のパスワード",
+        "newPassword": "新しいパスワード",
+        "newPassword2": "新しいパスワード(確認)"
+    },
+    "system": {
+        "systemInfo": "システム情報",
+        "clientBuildDt": "クライアントビルド日時",
+        "serverBuildDt": "サーバービルド日時",
+        "gitLog": "変更履歴"
+    },
+    "page": {
+        "getException": "ページデータの取得に失敗しました。\n{{message}}",
+        "saveException": "ページデータの保存に失敗しました。\n{{message}}",
+        "saved": "保存しました"
+    },
+    "table": {
+        "delete": "削除",
+        "deleteConfirm": "データを削除します。よろしいですか？"
+    },
+    "filer": {
+        "name": "名前",
+        "lastModifiedDate": "更新日時",
+        "uploadedDate": "アップロード日時",
+        "size": "サイズ",
+        "type": "タイプ",
+        "id": "ID",
+        "upload": "アップロード",
+        "download": "ダウンロード",
+        "delete": "削除",
+        "deleteConfirm": "{{name}} を削除しますか？",
+        "deletedMessage": "{{name}} を削除しました",
+        "uploadedMessage": "{{name}} をアップロードしました",
+        "fileSaving": "ファイル保存中...",
+        "fileUploading": "ファイルアップロード中 {{percentDone}}%",
+        "filePreparingToDownload": "ダウンロード準備中...",
+        "fileDownloading": "ファイルダウンロード中 {{percentDone}}%"
+    },
+    "enums": {
+        "sex": {
+            "man": "男性",
+            "woman": "女性"
+        },
+        "scopeType": {
+            "public": "誰でもメニューに追加し、表示させることができます",
+            "private": "作成者のメニューにのみ表示されます"
+        },
+        "week": {
+            "sunday": "日",
+            "monday": "月",
+            "tuesday": "火",
+            "wednesday": "水",
+            "thursday": "木",
+            "friday": "金",
+            "saturday": "土"
+        },
+        "auth": {
+            "menu": {
+                "view": "メニュー表示",
+                "add": "メニュー作成",
+                "edit": "メニュー更新",
+                "delete": "メニュー削除",
+                "append": "メニュー追加"
+            },
+            "page": {
+                "view": "ページ表示",
+                "add": "ページ作成",
+                "edit": "ページ更新",
+                "delete": "ページ削除"
+            },
+            "user": {
+                "view": "ユーザ表示",
+                "add": "ユーザ追加",
+                "edit": "ユーザ更新",
+                "delete": "ユーザ削除"
+            }
+        }
+    }
 }

@@ -1,36 +1,65 @@
-<mat-toolbar color="primary" class="fix-nav">
+<mat-toolbar color="primary" class="fix-nav topnav-header">
     <button type="button" mat-icon-button (click)="toggleSidebar.emit()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
     <div>
-        Angular + Nest Example
+        WebPageManager
     </div>
     <span class="nav-spacer"></span>
 
+    <!-- <div>{{ user.name }}</div> -->
     <button mat-icon-button [matMenuTriggerFor]="rootMenu">
         <mat-icon>settings</mat-icon>
     </button>
 
     <mat-menu #rootMenu="matMenu">
-        <button mat-menu-item (click)="showUserInfo()">
+        <!-- <button mat-menu-item (click)="showUserInfo()">
             <mat-icon>person</mat-icon>
             <span>{{ 'Profile' | translate }}</span>
+        </button> -->
+        <button mat-menu-item (click)="openUserMng()" *ngIf="user.authCheck(30)">
+            <mat-icon>people</mat-icon>
+            <span>{{ 'topMenu.userManage' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="changePassword()">
+            <mat-icon>lock</mat-icon>
+            <span>{{ 'topMenu.changePassword' | translate }}</span>
         </button>
         <button mat-menu-item [matMenuTriggerFor]="language">
             <mat-icon>language</mat-icon>
-            <span>{{ 'Language' | translate }}</span>
+            <span>{{ 'topMenu.language' | translate }}</span>
+        </button>
+        <button mat-menu-item [matMenuTriggerFor]="theme">
+            <mat-icon>format_color_fill</mat-icon>
+            <span>{{ 'topMenu.theme' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="openSystemInfo()">
+            <mat-icon>info</mat-icon>
+            <span>{{ 'system.systemInfo' | translate }}</span>
         </button>
     </mat-menu>
       
     <mat-menu #language="matMenu">
         <button mat-menu-item (click)="changeLang('ja')">
-            <span>{{ 'Japanese' | translate }}</span>
+            <span>{{ 'topMenu.japanese' | translate }}</span>
         </button>
         <button mat-menu-item (click)="changeLang('en')">
-            <span>{{ 'English' | translate }}</span>
+            <span>{{ 'topMenu.english' | translate }}</span>
         </button>
     </mat-menu>
-      
+    
+    <mat-menu #theme="matMenu">
+        <button mat-menu-item (click)="onThemeChange('default-theme')">
+            <span>{{ 'Default' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="onThemeChange('dark-theme')">
+            <span>{{ 'Dark' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="onThemeChange('light-theme')">
+            <span>{{ 'Light' | translate }}</span>
+        </button>
+    </mat-menu>
+
     <button mat-icon-button (click)="onLoggedout()">
         <mat-icon>exit_to_app</mat-icon>
     </button>

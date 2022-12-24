@@ -1,0 +1,29 @@
+// Default colors
+$default-primary:   mat-palette($mat-teal, 700, 100, 800);
+$default-accent:    mat-palette($mat-teal, 700, 100, 800);
+
+
+$default-theme:     mat-light-theme($default-primary, $default-accent);
+
+.default-theme {
+    @include angular-material-theme($default-theme);
+}
+
+// Class to use when specifying colors individually
+$default-foreground-palette: map-get($default-theme, foreground);
+$default-background-palette: map-get($default-theme, background);
+
+.default-theme-color {
+    background-color : mat-color($default-background-palette, background)!important;
+    color: mat-color($default-foreground-palette, text)!important;
+}
+
+.default-theme-primary {
+    background-color : mat-color($default-primary)!important;
+    color: white!important;
+}
+
+.default-theme-spinner {
+    // background-color : mat-color($default-background-palette, background, .28)!important;
+    color: mat-color($default-primary)!important;
+}

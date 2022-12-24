@@ -1,0 +1,45 @@
+<ng-container cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragBoundary=".cdk-overlay-container">
+  <!-- header -->
+  <div class="modal-header" mat-dialog-title cdkDragHandle>
+    <h4 class="modal-title">{{ title | translate }}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="close('cancel')" tabindex="-1">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <!-- body -->
+  <div class="card-body">
+    <div class="form-row">
+      <div class="col-left">
+        <input type="text" class="form-control" [(ngModel)]="searchText" (keyup.enter)="search()">
+      </div>
+      <div class="col-left">
+        <button mat-raised-button color="primary" (click)="search()">{{ 'search' | translate }}</button>
+      </div>
+      <div class="col-right">
+        <button mat-raised-button color="primary" (click)="updateData(null)" *ngIf="user.authCheck(authType + 1)">
+          {{ 'add' | translate }}
+        </button>
+      </div>
+    </div>
+    <hr class="bs-hr">
+
+    <div class="table-responsive table-scroll">
+      <table class="bs-table table-bordered">
+        <thead>
+          <tr class="bs-tr">
+            <th *ngFor="let list_column of list_columns">{{ translateHeader + list_column | translate }}</th>
+            <th class="btn-cell" *ngIf="user.authCheck(authType + 2)"></th>
+            <th class="btn-cell" *ngIf="user.authCheck(authType + 3)"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="bs-tr" *ngFor="let data of datas">
+            <td *ngFor="let list_column of list_columns">{{ data[list_column] }}</td>
+            <td *ngIf="user.authCheck(authType + 2)"><mat-icon color="primary"(click)="updateData(data)">edit</mat-icon></td>
+            <td *ngIf="user.authCheck(authType + 3)"><mat-icon color="warn" (click)="deleteData(data)">delete_forever</mat-icon></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

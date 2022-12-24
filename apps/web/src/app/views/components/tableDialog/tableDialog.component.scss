@@ -1,0 +1,37 @@
+td, th {
+    text-align: left;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.table-scroll {
+    max-height: calc(100vh - 250px);
+    overflow-y: scroll;
+}
+
+.btn-cell {
+    width: 20px;
+}
+
+.col-left {
+    padding-right: 5px;
+    padding-left: 5px;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    // margin-right:auto;
+}
+
+.col-right {
+    padding-right: 5px;
+    padding-left: 5px;
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    margin-left:auto;
+}

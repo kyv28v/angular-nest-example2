@@ -1,0 +1,29 @@
+// Dark theme
+$dark-primary:  mat-palette($mat-blue-grey);
+$dark-accent:   mat-palette($mat-amber, A200, A100, A400);
+$dark-warn:     mat-palette($mat-deep-orange);
+
+$dark-theme:    mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+.dark-theme {
+    @include angular-material-theme($dark-theme);
+}
+
+// Class to use when specifying colors individually
+$dark-foreground-palette: map-get($dark-theme, foreground);
+$dark-background-palette: map-get($dark-theme, background);
+
+.dark-theme-color {
+    background-color : mat-color($dark-background-palette, background)!important;
+    color: mat-color($dark-foreground-palette, text)!important;
+}
+
+.dark-theme-primary {
+    background-color : mat-color($dark-primary)!important;
+    color: white!important;
+}
+
+.dark-theme-spinner {
+    // background-color : mat-color($dark-background-palette, background, .28)!important;
+    color: mat-color($dark-primary)!important;
+}

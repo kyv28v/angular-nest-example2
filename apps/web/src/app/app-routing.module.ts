@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './common/guard/auth.guard';
+import { BeforeUnloadGuard } from './common/guard/beforeUnload.guard';
 
 const routes: Routes = [
     {
@@ -10,13 +11,16 @@ const routes: Routes = [
     },
     {
         path: 'login',
-        loadChildren: () => import('./views/common/login/login.module').then(m => m.LoginModule)
+        loadChildren: () => import('./views/components/login/login.module').then(m => m.LoginModule)
     }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
     exports: [RouterModule],
-    providers: [AuthGuard]
+    providers: [
+        AuthGuard,
+        BeforeUnloadGuard,
+    ]
 })
 export class AppRoutingModule {}

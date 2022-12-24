@@ -1,0 +1,31 @@
+<div class="page-header text-center">
+    <h1>WebPageManager</h1>
+</div>
+<hr>
+<div class="container" style="max-width: 350px;">
+    <div class="card">
+        <div class="card-header" [ngClass]="shared.theme + '-primary'">{{ 'login.login' | translate }}</div>
+
+        <div class="card-body">
+            {{ 'login.userId' | translate }}
+            <input type="text" class="form-control bottom-margin w-90" placeholder="{{ 'login.enterUserId' | translate }}" required autofocus [(ngModel)]="userId">
+            {{ 'login.password' | translate }}
+            <input type="password" class="form-control bottom-margin w-90" placeholder="{{ 'login.enterPassword' | translate }}" required [(ngModel)]="password">
+            <div class="text-center">
+                <button mat-raised-button color="primary" (click)="onLogin()">
+                    {{ 'login.login' | translate }}
+                </button>
+            </div>
+            <br>
+            <a href="javascript:void(0);" (click)="onAdminLogin()">{{ 'login.adminLogin' | translate }}</a>
+            <br>
+            <a href="javascript:void(0);" (click)="onGuestLogin()">{{ 'login.guestLogin' | translate }}</a>
+        </div>
+    </div>
+</div>
+<hr>
+<footer>
+    <div class="container-fluid text-center">
+        <p class="help-block">&#169; 2020- xxxxxxx.com</p>
+    </div>
+</footer>

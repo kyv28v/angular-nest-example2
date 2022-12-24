@@ -1,0 +1,43 @@
+// tooltip
+.tooltip-area {
+    position: absolute;
+    display: inline-block;
+    right: auto;
+}
+
+.tooltip-area p {
+    position: relative;
+    top: 0px;
+    right: 10px;
+    display: inline-block;
+    margin: 1.5em 0;
+    padding: 7px 10px;
+    min-width: 120px;
+    max-width: 100%;
+    color: #fff;
+    font-size: 12px;
+    background: #000;
+    border-radius: 5px;
+}
+  
+.tooltip-area p:before {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    left: -7px;
+    top: 5px;
+    border-right: 7px solid #000;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+}
+
+.form-wide {
+    width: 95%;
+}
+
+label {
+    display: inline-block;
+    margin: .3rem;
+}

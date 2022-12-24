@@ -8,7 +8,16 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+
 import { TranslateModule } from '@ngx-translate/core';
+
+import { ToastrModule } from 'ngx-toastr';
+
+import { FlatpickrModule } from 'angularx-flatpickr';
+
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopnavComponent } from './topnav/topnav.component';
 import { LayoutRoutingModule } from './layout-routing.module';
@@ -30,8 +39,13 @@ import { RoomAccessMngComponent } from '../pages/roomAccessMng/roomAccessMng.com
         MatInputModule,
         MatMenuModule,
         MatListModule,
+        MatDialogModule,
+        MatSortModule,
+        MatProgressSpinnerModule,
         TranslateModule,
         FormsModule,
+        ToastrModule.forRoot(),
+        FlatpickrModule.forRoot(),
     ],
     declarations: [
         LayoutComponent,

@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as crypto from 'crypto-js';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
-import { SimpleDialogComponent, InputType } from '../../common/dialogs/simpleDialog.component';
+import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { Enums } from '../../../common/defines/enums';
 
 @Component({
@@ -22,6 +22,7 @@ export class UserMngComponent implements OnInit {
   constructor(
     private http: HttpRequestInterceptor,
     private modalService: NgbModal,
+    private simpleDialog: SimpleDialogComponent,
   ) { }
 
   // 画面初期表示
@@ -60,7 +61,7 @@ export class UserMngComponent implements OnInit {
       { label: 'Note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
     ];
     dialog.buttons = [
-      { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.activeModal.close('cancel'); } },
+      { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.close('cancel'); } },
       { class: 'btn-right', name: 'OK',     click: async () => { this.regUserExec(data, dialog); } },
     ];
 
@@ -77,8 +78,7 @@ export class UserMngComponent implements OnInit {
     if (dialog.validation() === false) { return; }
 
     // 確認ダイアログの表示
-    const result = await SimpleDialogComponent.openConfirmDialog(
-      this.modalService,
+    const result = await this.simpleDialog.confirm(
       'Confirm',
       'Do you want to register user?');
     if (result !== 'ok') { return; }
@@ -107,14 +107,13 @@ export class UserMngComponent implements OnInit {
       return;
     }
 
-    dialog.activeModal.close('ok');
+    dialog.close('ok');
   }
 
   // 削除
   async delUser(data: any) {
     // 確認ダイアログの表示
-    const result = await SimpleDialogComponent.openConfirmDialog(
-      this.modalService,
+    const result = await this.simpleDialog.confirm(
       'Confirm',
       'Do you want to delete user?');
     if (result !== 'ok') { return; }

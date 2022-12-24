@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
-import { SimpleDialogComponent, InputType } from '../../common/dialogs/simpleDialog.component';
+import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { Enums } from '../../../common/defines/enums';
 
 @Component({
@@ -21,7 +21,8 @@ export class RoomAccessMngComponent implements OnInit {
   constructor(
     private http: HttpRequestInterceptor,
     private modalService: NgbModal,
-  ) { }
+    private simpleDialog: SimpleDialogComponent,
+    ) { }
 
   // 画面初期表示
   async ngOnInit() {
@@ -63,7 +64,7 @@ export class RoomAccessMngComponent implements OnInit {
       { label: 'Note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
     ];
     dialog.buttons = [
-      { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.activeModal.close('cancel'); } },
+      { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.close('cancel'); } },
       { class: 'btn-right', name: 'OK',     click: async () => { this.regRoomAccessMngExec(data, dialog); } },
     ];
 
@@ -80,8 +81,7 @@ export class RoomAccessMngComponent implements OnInit {
     if (dialog.validation() === false) { return; }
 
     // 確認ダイアログの表示
-    const result = await SimpleDialogComponent.openConfirmDialog(
-      this.modalService,
+    const result = await this.simpleDialog.confirm(
       'Confirm',
       'Do you want to register room access datetime?');
     if (result !== 'ok') { return; }
@@ -106,14 +106,13 @@ export class RoomAccessMngComponent implements OnInit {
       return;
     }
 
-    dialog.activeModal.close('ok');
+    dialog.close('ok');
   }
 
   // 削除
   async delRoomAccessMng(data: any) {
     // 確認ダイアログの表示
-    const result = await SimpleDialogComponent.openConfirmDialog(
-      this.modalService,
+    const result = await this.simpleDialog.confirm(
       'Confirm',
       'Do you want to delete room access datetime?');
     if (result !== 'ok') { return; }

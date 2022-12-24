@@ -23,6 +23,50 @@ export class EnumChangePipe implements PipeTransform {
 }
 
 export namespace Enums {
+  // Converts an array of only selected values ​​to an array of true / false.
+  // * Generate checkbox value from DB setting value.
+  // Example:[1,2,5] -> [true, true, false, false, true]
+  export function getSelectedList(enumList: any, valueList: any) {
+    let selectedList: boolean[] = [];
+    if (!valueList) return selectedList;
+    enumList.forEach((e: any) => {
+      selectedList.push(valueList.indexOf(e.id) !== -1);
+    });
+    return selectedList;
+  }
+
+  // Converts ​​an array of true / false ​​to an array of only selected values.
+  // * Generate DB setting value from checkbox value.
+  // Example:[true, true, false, false, true] -> [1,2,5]
+  export function getSelectedValue(enumList: any, valueList: any) {
+    let selectedValue: any[] = [];
+    valueList.forEach((v: any, index: number) => {
+      if (v) {
+        selectedValue.push(enumList[index].id);
+      }
+    });
+    return selectedValue;
+  }
+
+  // Authority
+  export const Auth = [
+    // Menu
+    { id: 10, name: 'enums.auth.menu.view' },
+    { id: 11, name: 'enums.auth.menu.add' },
+    { id: 12, name: 'enums.auth.menu.edit' },
+    { id: 13, name: 'enums.auth.menu.delete' },
+    { id: 14, name: 'enums.auth.menu.append' },
+    // Page
+    { id: 20, name: 'enums.auth.page.view' },
+    { id: 21, name: 'enums.auth.page.add' },
+    { id: 22, name: 'enums.auth.page.edit' },
+    { id: 23, name: 'enums.auth.page.delete' },
+    // User
+    { id: 30, name: 'enums.auth.user.view' },
+    { id: 31, name: 'enums.auth.user.add' },
+    { id: 32, name: 'enums.auth.user.edit' },
+    { id: 33, name: 'enums.auth.user.delete' },
+  ];
   // 性別
   export const Sex = [
     { id: 1, name: 'Man' },
