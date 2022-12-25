@@ -279,7 +279,7 @@ export class TopnavComponent implements OnInit {
     // open system info dialog.
     async openSystemInfo() {
         // get system info.
-        const systemInfo: any = await this.http.get('api/common/system/systemInfo');
+        const systemInfo: any = await this.http.get('api/systemInfo');
         
         // open dialog
         const dialog = this.simpleDialog.open();
