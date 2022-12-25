@@ -40,9 +40,11 @@ export class AuthService {
         throw new Error('Invalid id or password.');
       }
 
+      const userId = data.rows[0].id;
+
       // アクセストークンの取得
       const accessToken = jwt.sign(
-        { userid: data.rows[0].id },
+        { userId: userId },
         environment.tokenConf.accessTokenSecretKey,
         {
           algorithm: environment.tokenConf.algorithm,
@@ -51,7 +53,7 @@ export class AuthService {
 
       // リフレッシュトークンの取得
       const refreshToken = jwt.sign(
-        { userid: data.rows[0].id },
+        { userId: userId },
         environment.tokenConf.refreshTokenSecretKey,
         {
           algorithm: environment.tokenConf.algorithm,
@@ -59,9 +61,10 @@ export class AuthService {
         });
 
       console.log('createToken() end');
+      console.log(' userId:' + userId);
       console.log(' accessToken:' + accessToken);
       console.log(' refreshToken:' + refreshToken);
-      return { accessToken: accessToken, refreshToken: refreshToken, message: null };
+      return { userId: userId, accessToken: accessToken, refreshToken: refreshToken, message: null };
     } catch (e) {
       console.error(e.stack);
       return { message: e.message };

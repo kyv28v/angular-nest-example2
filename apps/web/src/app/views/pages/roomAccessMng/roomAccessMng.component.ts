@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
+import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { Enums } from '../../../common/defines/enums';
 
@@ -20,9 +21,9 @@ export class RoomAccessMngComponent implements OnInit {
 
   constructor(
     private http: HttpRequestInterceptor,
-    private modalService: NgbModal,
     private simpleDialog: SimpleDialogComponent,
-    ) { }
+    public user: UserService,
+  ) { }
 
   // 画面初期表示
   async ngOnInit() {

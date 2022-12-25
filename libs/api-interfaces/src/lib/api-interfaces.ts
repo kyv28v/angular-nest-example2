@@ -3,6 +3,7 @@ export interface Message {
 }
 
 export interface AuthToken {
+  userId?: number;
   accessToken?: string;
   refreshToken?: string;
   message: string;

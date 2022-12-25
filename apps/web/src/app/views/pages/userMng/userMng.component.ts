@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as crypto from 'crypto-js';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
+import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { Enums } from '../../../common/defines/enums';
 
@@ -21,8 +22,8 @@ export class UserMngComponent implements OnInit {
 
   constructor(
     private http: HttpRequestInterceptor,
-    private modalService: NgbModal,
     private simpleDialog: SimpleDialogComponent,
+    public user: UserService,
   ) { }
 
   // 画面初期表示
@@ -47,17 +48,22 @@ export class UserMngComponent implements OnInit {
   // 追加/更新
   // ※ 引数の user が null なら追加、null でなければ更新する
   async regUser(data: any) {
+    const selectedList = Enums.getSelectedList(Enums.Auth, data?.auth);
+
     // ユーザ登録用のダイアログ表示
     const dialog = this.simpleDialog.open();
     dialog.title = 'Register user';
     dialog.message = '';
     dialog.items = [
-      { label: 'Name', value: data?.name, inputtype: InputType.Text, required: true, placeholder: 'John Smith' },
-      { label: 'Age', value: data?.age, inputtype: InputType.Text, required: true, placeholder: '20' },
-      { label: 'Sex', value: data?.sex, inputtype: InputType.Radio, required: false, placeholder: '', selectList : Enums.Sex },
-      { label: 'Birthday', value: data?.birthday, inputtype: InputType.Date, required: false, placeholder: '1990/01/01' },
-      { label: 'Password', value: data ? '●●●●●●' : null, inputtype: data ? InputType.Display : InputType.Password, required: false, placeholder: '' },
-      { label: 'Note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
+      { label: 'user.id', value: data?.id, inputtype: InputType.Display },
+      { label: 'user.code', value: data?.code, inputtype: data ? InputType.Display : InputType.Text, required: true, placeholder: '' },
+      { label: 'user.name', value: data?.name, inputtype: InputType.Text, required: true, placeholder: 'John Smith' },
+      { label: 'user.age', value: data?.age, inputtype: InputType.Text, required: true, placeholder: '20' },
+      { label: 'user.sex', value: data?.sex, inputtype: InputType.Radio, required: false, placeholder: '', selectList : Enums.Sex },
+      { label: 'user.birthday', value: data?.birthday, inputtype: InputType.Date, required: false, placeholder: '1990/01/01' },
+      { label: 'user.password', value: data ? '●●●●●●' : null, inputtype: data ? InputType.Display : InputType.Password, required: true, placeholder: '' },
+      { label: 'user.note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
+      { label: 'user.auth', value: selectedList, inputtype: InputType.Check, required: false, placeholder: '', selectList : Enums.Auth },
     ];
     dialog.buttons = [
       { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.close('cancel'); } },
@@ -83,22 +89,23 @@ export class UserMngComponent implements OnInit {
     if (result !== 'ok') { return; }
 
     // APIの呼び出し
-    const name = dialog.items[0].value;
-    const age = dialog.items[1].value;
-    const sex = dialog.items[2].value;
-    const birthday = dialog.items[3].value;
-    const password = dialog.items[4].value;
-    const note = dialog.items[5].value;
-
+    const code = dialog.items[1].value;
+    const name = dialog.items[2].value;
+    const age = dialog.items[3].value;
+    const sex = dialog.items[4].value;
+    const birthday = dialog.items[5].value;
+    const password = dialog.items[6].value;
+    const note = dialog.items[7].value;
+    const auth = JSON.stringify(Enums.getSelectedValue(Enums.Auth, dialog.items[8].value));
 
     // 追加/更新のクエリを実行
     let body;
     if (data) {
-      body = { sql: 'Users/updUser.sql', values: [name, age, sex, birthday, note, data.id] };
+      body = { sql: 'Users/updUser.sql', values: [code, name, age, sex, birthday, note, auth, data.id] };
     } else {
       // パスワードのハッシュ化
       const hashedPassword = crypto.SHA512(password).toString();
-      body = { sql: 'Users/addUser.sql', values: [name, age, sex, birthday, hashedPassword, note] };
+      body = { sql: 'Users/addUser.sql', values: [code, name, age, sex, birthday, hashedPassword, note, auth] };
     }
     const ret: any = await this.http.post('api/query', body);
     if (ret.message !== null) {

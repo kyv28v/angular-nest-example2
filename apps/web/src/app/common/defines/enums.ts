@@ -50,22 +50,16 @@ export namespace Enums {
 
   // Authority
   export const Auth = [
-    // Menu
-    { id: 10, name: 'enums.auth.menu.view' },
-    { id: 11, name: 'enums.auth.menu.add' },
-    { id: 12, name: 'enums.auth.menu.edit' },
-    { id: 13, name: 'enums.auth.menu.delete' },
-    { id: 14, name: 'enums.auth.menu.append' },
-    // Page
-    { id: 20, name: 'enums.auth.page.view' },
-    { id: 21, name: 'enums.auth.page.add' },
-    { id: 22, name: 'enums.auth.page.edit' },
-    { id: 23, name: 'enums.auth.page.delete' },
     // User
-    { id: 30, name: 'enums.auth.user.view' },
-    { id: 31, name: 'enums.auth.user.add' },
-    { id: 32, name: 'enums.auth.user.edit' },
-    { id: 33, name: 'enums.auth.user.delete' },
+    { id: 10, name: 'enums.auth.user.view' },
+    { id: 11, name: 'enums.auth.user.add' },
+    { id: 12, name: 'enums.auth.user.edit' },
+    { id: 13, name: 'enums.auth.user.delete' },
+    // roomAccessMng
+    { id: 20, name: 'enums.auth.roomAccessMng.view' },
+    { id: 21, name: 'enums.auth.roomAccessMng.add' },
+    { id: 22, name: 'enums.auth.roomAccessMng.edit' },
+    { id: 23, name: 'enums.auth.roomAccessMng.delete' },
   ];
   // 性別
   export const Sex = [

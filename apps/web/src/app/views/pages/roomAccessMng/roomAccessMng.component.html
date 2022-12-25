@@ -15,7 +15,7 @@
   </div>
   <hr>
   
-  <button class="btn btn-primary" (click)="regRoomAccessMng(null)">{{ 'Add' | translate }}</button>
+  <button class="btn btn-primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
   <hr>
 
   <div class="table-responsive">
@@ -40,8 +40,8 @@
         <td>{{ data.entry_dt | date:"yyyy/MM/dd HH:mm" }}</td>
         <td>{{ data.exit_dt | date:"yyyy/MM/dd HH:mm" }}</td>
         <td>{{ data.note }}</td>
-        <td><mat-icon color="primary"(click)="regRoomAccessMng(data)">edit</mat-icon></td>
-        <td><mat-icon color="warn" (click)="delRoomAccessMng(data)">delete_forever</mat-icon></td>
+        <td><mat-icon color="primary"(click)="regRoomAccessMng(data)" *ngIf="user.authCheck(22)">edit</mat-icon></td>
+        <td><mat-icon color="warn" (click)="delRoomAccessMng(data)" *ngIf="user.authCheck(23)">delete_forever</mat-icon></td>
       </tr>
     </tbody>
   </table>

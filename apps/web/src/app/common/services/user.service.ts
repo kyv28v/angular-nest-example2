@@ -11,14 +11,13 @@ import { SimpleDialogComponent, InputType } from '../../views/components/simpleD
 })
 export class UserService {
 
-  public _id = null;
+  public id = null;
   public code = null;
   public name = null;
   public age = null;
   public sex = null;
   public birthday = null;
   public note = null;
-  public menus: any[] = [];
   public auth: any[] = [];
 
   constructor(
@@ -29,7 +28,7 @@ export class UserService {
 
   async canActivate() {
     // ユーザ情報を保持していたら認可OK
-    if (this._id) return true;
+    if (this.id) return true;
 
     // ユーザIDを保持していなければ認可NG
     if(!localStorage.getItem('userId')) return false;
@@ -65,7 +64,7 @@ export class UserService {
       if (option?.dispHome != false) {
         this.router.navigate(['/home']);
       }
-    } catch (e) {
+    } catch (e: any) {
       alert(e.message)
     }
   }
@@ -74,7 +73,7 @@ export class UserService {
   async getUser(userId: string | null) {
     try {
       const values = JSON.stringify([userId]);
-      const ret: any = await this.http.get('api/common/db?action=Users/getUser&values=' + values);
+      const ret: any = await this.http.get('api/query?sql=Users/getUser.sql&values=' + values);
       if (ret.message !== null) {
         alert('Get user failed.\n' + ret.message);
         return false;
@@ -84,29 +83,19 @@ export class UserService {
         return false;
       }
       const user = ret.rows[0];
-      this._id = user._id;
+      this.id = user.id;
       this.code = user.code;
       this.name = user.name;
       this.age = user.age;
       this.sex = user.sex;
       this.birthday = user.birthday;
       this.note = user.note;
-      this.menus = user.menus;
       this.auth = user.auth;
       return true;
-    } catch (e) {
+    } catch (e: any) {
       // alert('Get user failed.\n' + e.message);
       console.log('Get user failed. ' + e.message);
       return false;
-    }
-  }
-
-  // メニュー情報の更新
-  async updateUserMenus() {
-    const ret: any = await this.http.post('api/common/db', { action: 'Users/updUserMenus', values: [this._id, JSON.stringify(this.menus)] });
-    if (ret.message !== null) {
-      alert('Update user menus failed.\n' + ret.message);
-      return;
     }
   }
 

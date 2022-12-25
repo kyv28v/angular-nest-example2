@@ -10,19 +10,20 @@
   </div>
   <hr>
   
-  <button class="btn btn-primary" (click)="regUser(null)">{{ 'Add' | translate }}</button>
+  <button class="btn btn-primary" (click)="regUser(null)" *ngIf="user.authCheck(11)">{{ 'Add' | translate }}</button>
   <hr>
 
   <div class="table-responsive">
   <table class="table table-bordered">
     <thead class="thead-light">
       <tr>
-        <th>{{ 'ID' | translate }}</th>
-        <th>{{ 'Name' | translate }}</th>
-        <th>{{ 'Age' | translate }}</th>
-        <th>{{ 'Sex' | translate }}</th>
-        <th>{{ 'Birthday' | translate }}</th>
-        <th>{{ 'Note' | translate }}</th>
+        <th>{{ 'user.id' | translate }}</th>
+        <th>{{ 'user.code' | translate }}</th>
+        <th>{{ 'user.name' | translate }}</th>
+        <th>{{ 'user.age' | translate }}</th>
+        <th>{{ 'user.sex' | translate }}</th>
+        <th>{{ 'user.birthday' | translate }}</th>
+        <th>{{ 'user.note' | translate }}</th>
         <th></th>
         <th></th>
       </tr>
@@ -30,13 +31,14 @@
     <tbody>
       <tr *ngFor="let data of users">
         <td>{{ data.id }}</td>
+        <td>{{ data.code }}</td>
         <td>{{ data.name }}</td>
         <td>{{ data.age }}</td>
         <td>{{ data.sex | enumChange: enums.Sex }}</td>
         <td>{{ data.birthday | date:"yyyy/MM/dd" }}</td>
         <td>{{ data.note }}</td>
-        <td><mat-icon color="primary"(click)="regUser(data)">edit</mat-icon></td>
-        <td><mat-icon color="warn" (click)="delUser(data)">delete_forever</mat-icon></td>
+        <td><mat-icon color="primary"(click)="regUser(data)" *ngIf="user.authCheck(12)">edit</mat-icon></td>
+        <td><mat-icon color="warn" (click)="delUser(data)" *ngIf="user.authCheck(13)">delete_forever</mat-icon></td>
       </tr>
     </tbody>
   </table>

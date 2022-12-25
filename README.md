@@ -15,10 +15,10 @@ DBはPostgreSQLを使用しています。
 
 ・テスト用のテーブル、初期ユーザ作成
 ```
-# CREATE TABLE users (id serial, code varchar(50), name varchar(50), age int, sex int, birthday timestamptz, password varchar(128), note varchar(256));
+# CREATE TABLE users (id serial, code varchar(50), name varchar(50), age int, sex int, birthday timestamptz, password varchar(128), note varchar(256), auth jsonb);
 # CREATE TABLE room_access_mng (id serial, room_cd varchar(10), user_id int, entry_dt timestamptz, exit_dt timestamptz, note varchar(256));
-# INSERT INTO users (code, name, password, note) VALUES ('admin', 'admin','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456');
-# INSERT INTO users (code, name, password, note) VALUES ('guest', 'guest','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456');
+# INSERT INTO users (code, name, password, note, auth) VALUES ('admin', 'admin','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456', '[10, 11, 12, 13, 20, 21, 22, 23]');
+# INSERT INTO users (code, name, password, note, auth) VALUES ('guest', 'guest','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456', '[20, 21, 22, 23]');
 ```
 
 ・接続設定  

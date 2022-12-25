@@ -1,2 +1,2 @@
-UPDATE users SET name = $1, age = $2, sex = $3, birthday = $4, note = $5
- WHERE id = $6
+UPDATE users SET code = $1, name = $2, age = $3, sex = $4, birthday = $5, note = $6, auth = $7
+ WHERE id = $8

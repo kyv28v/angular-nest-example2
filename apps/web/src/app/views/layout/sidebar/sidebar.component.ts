@@ -1,5 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { UserService } from '../../../common/services/user.service';
+
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
@@ -9,7 +11,9 @@ export class SidebarComponent implements OnInit {
     // 他コンポーネントのイベント（sidebar.toggle）を実行するため、EventEmitterを使用する
     @Output() toggleSidebar = new EventEmitter();
 
-    constructor() {}
+    constructor(
+        public user: UserService,
+    ) {}
 
     ngOnInit() {}
 

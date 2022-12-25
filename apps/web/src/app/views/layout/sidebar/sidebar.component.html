@@ -3,10 +3,10 @@
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/home']" (click)="selectMenu()">
             <mat-icon class="sidenav-icon">home</mat-icon> {{ 'Home' | translate }}
         </a>
-        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/userMng']" (click)="selectMenu()">
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/userMng']" (click)="selectMenu()" *ngIf="user.authCheck(10)">
             <mat-icon class="sidenav-icon">people</mat-icon> {{ 'User Manage' | translate }}
         </a>
-        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/roomAccessMng']" (click)="selectMenu()">
+        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/roomAccessMng']" (click)="selectMenu()" *ngIf="user.authCheck(20)">
             <mat-icon class="sidenav-icon">access_time</mat-icon> {{ 'Room Access Manage' | translate }}
         </a>
     </mat-nav-list>

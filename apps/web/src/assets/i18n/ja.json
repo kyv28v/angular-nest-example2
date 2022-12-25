@@ -37,13 +37,6 @@
     "Home Screen": "ホーム画面",
     "--- User Manage ---": "--- ユーザ管理 ---",
     "User Manage": "ユーザ管理",
-    "ID": "ID",
-    "Name": "名前",
-    "Age": "年齢",
-    "Sex": "性別",
-    "Birthday": "誕生日",
-    "Password": "パスワード",
-    "Note": "備考",
     "Register user": "ユーザ登録",
     "Do you want to register user?": "ユーザを登録します。よろしいですか？",
     "Do you want to delete user?": "ユーザを削除します。よろしいですか？",
@@ -125,7 +118,7 @@
     "user": {
         "userManage": "ユーザ管理",
         "id": "ID",
-        "code": "ID",
+        "code": "コード",
         "name": "名前",
         "age": "年齢",
         "sex": "性別",
@@ -183,10 +176,6 @@
             "man": "男性",
             "woman": "女性"
         },
-        "scopeType": {
-            "public": "誰でもメニューに追加し、表示させることができます",
-            "private": "作成者のメニューにのみ表示されます"
-        },
         "week": {
             "sunday": "日",
             "monday": "月",
@@ -197,24 +186,17 @@
             "saturday": "土"
         },
         "auth": {
-            "menu": {
-                "view": "メニュー表示",
-                "add": "メニュー作成",
-                "edit": "メニュー更新",
-                "delete": "メニュー削除",
-                "append": "メニュー追加"
-            },
-            "page": {
-                "view": "ページ表示",
-                "add": "ページ作成",
-                "edit": "ページ更新",
-                "delete": "ページ削除"
-            },
             "user": {
                 "view": "ユーザ表示",
                 "add": "ユーザ追加",
                 "edit": "ユーザ更新",
                 "delete": "ユーザ削除"
+            },
+            "roomAccessMng": {
+                "view": "入退室管理：表示",
+                "add": "入退室管理：追加",
+                "edit": "入退室管理：更新",
+                "delete": "入退室管理：削除"
             }
         }
     }

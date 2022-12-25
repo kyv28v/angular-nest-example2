@@ -123,14 +123,14 @@ export class TopnavComponent implements OnInit {
         dialog2.title = 'user.registerUser';
         dialog2.message = '';
         dialog2.items = [
-        	{ label: 'user.code', value: data?.code, inputtype: data ? InputType.Display : InputType.Text, required: true, placeholder: '' },
-          { label: 'user.name', value: data?.name, inputtype: InputType.Text, required: true, placeholder: '' },
-          { label: 'user.age', value: data?.age, inputtype: InputType.Text, required: true, placeholder: '' },
-          { label: 'user.sex', value: data?.sex, inputtype: InputType.Radio, required: false, placeholder: '', selectList : Enums.Sex },
-          { label: 'user.birthday', value: data?.birthday, inputtype: InputType.Date, required: false, placeholder: '' },
-          { label: 'user.password', value: data ? '●●●●●●' : null, inputtype: data ? InputType.Display : InputType.Password, required: true, placeholder: '' },
-          { label: 'user.note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
-          { label: 'user.auth', value: selectedList, inputtype: InputType.Check, required: false, placeholder: '', selectList : Enums.Auth },
+            { label: 'user.code', value: data?.code, inputtype: data ? InputType.Display : InputType.Text, required: true, placeholder: '' },
+            { label: 'user.name', value: data?.name, inputtype: InputType.Text, required: true, placeholder: '' },
+            { label: 'user.age', value: data?.age, inputtype: InputType.Text, required: true, placeholder: '' },
+            { label: 'user.sex', value: data?.sex, inputtype: InputType.Radio, required: false, placeholder: '', selectList : Enums.Sex },
+            { label: 'user.birthday', value: data?.birthday, inputtype: InputType.Date, required: false, placeholder: '' },
+            { label: 'user.password', value: data ? '●●●●●●' : null, inputtype: data ? InputType.Display : InputType.Password, required: true, placeholder: '' },
+            { label: 'user.note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
+            { label: 'user.auth', value: selectedList, inputtype: InputType.Check, required: false, placeholder: '', selectList : Enums.Auth },
         ];
         dialog2.buttons = [
           { class: 'btn-left',  color:'',        name: 'cancel', click: async () => { dialog2.close('cancel'); } },
@@ -250,7 +250,7 @@ export class TopnavComponent implements OnInit {
 
             // APIの呼び出し
             const ret: any = await this.http.post('api/common/changePassword', {
-                userId: this.user._id,
+                userId: this.user.id,
                 oldPassword: hashedOldPassword,
                 newPassword: hashedNewPassword,
             });
@@ -260,7 +260,7 @@ export class TopnavComponent implements OnInit {
             }
     
             dialog.close('ok');
-        } catch(e) {
+        } catch(e: any) {
             alert(e.message)
         }
     }
