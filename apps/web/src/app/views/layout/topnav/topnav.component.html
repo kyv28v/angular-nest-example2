@@ -17,7 +17,7 @@
             <mat-icon>person</mat-icon>
             <span>{{ 'Profile' | translate }}</span>
         </button> -->
-        <button mat-menu-item (click)="openUserMng()" *ngIf="user.authCheck(30)">
+        <button mat-menu-item (click)="openUserMng()" *ngIf="user.authCheck(10)">
             <mat-icon>people</mat-icon>
             <span>{{ 'topMenu.userManage' | translate }}</span>
         </button>

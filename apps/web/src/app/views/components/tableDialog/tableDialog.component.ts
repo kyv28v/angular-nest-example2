@@ -17,7 +17,10 @@ import { Enums } from '../../../common/defines/enums';
 export class TableDialogComponent {
   public enums = Enums;
   private dialogRef: MatDialogRef<TableDialogComponent, any>;
-  public authType: number;
+  public authView: number;
+  public authAdd: number;
+  public authEdit: number;
+  public authDelete: number;
   public translateHeader = "";
 
   // function defined by the caller

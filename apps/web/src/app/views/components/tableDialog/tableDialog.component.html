@@ -16,7 +16,7 @@
         <button mat-raised-button color="primary" (click)="search()">{{ 'search' | translate }}</button>
       </div>
       <div class="col-right">
-        <button mat-raised-button color="primary" (click)="updateData(null)" *ngIf="user.authCheck(authType + 1)">
+        <button mat-raised-button color="primary" (click)="updateData(null)" *ngIf="user.authCheck(authAdd)">
           {{ 'add' | translate }}
         </button>
       </div>
@@ -28,15 +28,15 @@
         <thead>
           <tr class="bs-tr">
             <th *ngFor="let list_column of list_columns">{{ translateHeader + list_column | translate }}</th>
-            <th class="btn-cell" *ngIf="user.authCheck(authType + 2)"></th>
-            <th class="btn-cell" *ngIf="user.authCheck(authType + 3)"></th>
+            <th class="btn-cell" *ngIf="user.authCheck(authEdit)"></th>
+            <th class="btn-cell" *ngIf="user.authCheck(authDelete)"></th>
           </tr>
         </thead>
         <tbody>
           <tr class="bs-tr" *ngFor="let data of datas">
             <td *ngFor="let list_column of list_columns">{{ data[list_column] }}</td>
-            <td *ngIf="user.authCheck(authType + 2)"><mat-icon color="primary"(click)="updateData(data)">edit</mat-icon></td>
-            <td *ngIf="user.authCheck(authType + 3)"><mat-icon color="warn" (click)="deleteData(data)">delete_forever</mat-icon></td>
+            <td *ngIf="user.authCheck(authEdit)"><mat-icon color="primary"(click)="updateData(data)">edit</mat-icon></td>
+            <td *ngIf="user.authCheck(authDelete)"><mat-icon color="warn" (click)="deleteData(data)">delete_forever</mat-icon></td>
           </tr>
         </tbody>
       </table>

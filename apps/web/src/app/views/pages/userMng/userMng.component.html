@@ -24,8 +24,8 @@
         <th>{{ 'user.sex' | translate }}</th>
         <th>{{ 'user.birthday' | translate }}</th>
         <th>{{ 'user.note' | translate }}</th>
-        <th></th>
-        <th></th>
+        <th *ngIf="user.authCheck(12)"></th>
+        <th *ngIf="user.authCheck(13)"></th>
       </tr>
     </thead>
     <tbody>
@@ -37,8 +37,8 @@
         <td>{{ data.sex | enumChange: enums.Sex }}</td>
         <td>{{ data.birthday | date:"yyyy/MM/dd" }}</td>
         <td>{{ data.note }}</td>
-        <td><mat-icon color="primary"(click)="regUser(data)" *ngIf="user.authCheck(12)">edit</mat-icon></td>
-        <td><mat-icon color="warn" (click)="delUser(data)" *ngIf="user.authCheck(13)">delete_forever</mat-icon></td>
+        <td *ngIf="user.authCheck(12)"><mat-icon color="primary"(click)="regUser(data)">edit</mat-icon></td>
+        <td *ngIf="user.authCheck(13)"><mat-icon color="warn" (click)="delUser(data)">delete_forever</mat-icon></td>
       </tr>
     </tbody>
   </table>
