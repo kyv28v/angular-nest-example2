@@ -13,10 +13,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslateModule } from '@ngx-translate/core';
-
 import { ToastrModule } from 'ngx-toastr';
 
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopnavComponent } from './topnav/topnav.component';
@@ -46,6 +46,7 @@ import { RoomAccessMngComponent } from '../pages/roomAccessMng/roomAccessMng.com
         FormsModule,
         ToastrModule.forRoot(),
         FlatpickrModule.forRoot(),
+        AngularResizeEventModule,
     ],
     declarations: [
         LayoutComponent,

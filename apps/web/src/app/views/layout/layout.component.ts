@@ -65,15 +65,10 @@ export class LayoutComponent implements OnInit {
     }
 
     // resize sidebar width
-    // onResized(event: ResizedEvent) {
-    //     const sidebarWidth = event.newWidth.toString() + 'px';
-    //     localStorage.setItem('sidebar.width', sidebarWidth);
-    //     console.log("set sidebar width:" + sidebarWidth);
-    // }
-    onResized(event: Event) {
-        // const sidebarWidth = event.newWidth.toString() + 'px';
-        // localStorage.setItem('sidebar.width', sidebarWidth);
-        // console.log("set sidebar width:" + sidebarWidth);
+    onResized(event: ResizedEvent) {
+        const sidebarWidth = event.newRect.width.toString() + 'px';
+        localStorage.setItem('sidebar.width', sidebarWidth);
+        console.log("set sidebar width:" + sidebarWidth);
     }
 
     // change theme

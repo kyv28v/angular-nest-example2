@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
+import { SharedService } from '../../../common/services/shared.service';
 import { UserService } from '../../../common/services/user.service';
 
 @Component({
@@ -12,6 +13,7 @@ export class SidebarComponent implements OnInit {
     @Output() toggleSidebar = new EventEmitter();
 
     constructor(
+        public shared: SharedService,
         public user: UserService,
     ) {}
 
