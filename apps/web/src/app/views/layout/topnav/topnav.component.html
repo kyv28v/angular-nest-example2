@@ -13,10 +13,10 @@
     </button>
 
     <mat-menu #rootMenu="matMenu">
-        <!-- <button mat-menu-item (click)="showUserInfo()">
+        <button mat-menu-item (click)="showUserInfo()">
             <mat-icon>person</mat-icon>
             <span>{{ 'Profile' | translate }}</span>
-        </button> -->
+        </button>
         <button mat-menu-item (click)="openUserMng()" *ngIf="user.authCheck(10)">
             <mat-icon>people</mat-icon>
             <span>{{ 'topMenu.userManage' | translate }}</span>

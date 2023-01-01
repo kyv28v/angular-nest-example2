@@ -45,30 +45,31 @@ export class TopnavComponent implements OnInit {
         await this.user.logout();
     }
 
-    // // ユーザ情報表示
-    // async showUserInfo() {
-    //     const selectedName = this.user.auth.map((id) => (this.enumChangePipe.transform(id, Enums.Auth)));
+    // ユーザ情報表示
+    async showUserInfo() {
+        const selectedName = this.user.auth.map((id) => (this.enumChangePipe.transform(id, Enums.Auth)));
 
-    //     // ユーザ情報用のダイアログ表示
-    //     const modalRef = this.modalService.open(SimpleDialogComponent, { backdrop: 'static' });
-    //     const dialog = modalRef.componentInstance as SimpleDialogComponent;
-    //     dialog.title = 'Profile';
-    //     dialog.message = '';
-    //     dialog.items = [
-    //         { label: 'Name', value: this.user.name, inputtype: InputType.Display },
-    //         { label: 'Age', value: this.user.age, inputtype: InputType.Display },
-    //         { label: 'Sex', value: this.enumChangePipe.transform(this.user.sex, Enums.Sex), inputtype: InputType.Display },
-    //         { label: 'Birthday', value: this.datePipe.transform(this.user.birthday, 'yyyy/MM/dd'), inputtype: InputType.Display },
-    //         { label: 'Note', value: this.user.note, inputtype: InputType.DisplayArea },
-    //         { label: 'Auth', value: selectedName, inputtype: InputType.DisplayArea },
-    //     ];
-    //     dialog.buttons = [
-    //         { class: 'btn-right', name: 'ok',     click: async () => { dialog.activeModal.close('cancel'); } },
-    //     ];
+        // ユーザ情報用のダイアログ表示
+        const dialog = this.simpleDialog.open();
+        dialog.title = 'Profile';
+        dialog.message = '';
+        dialog.items = [
+            { label: 'user.id', value: this.user.id, inputtype: InputType.Display },
+            { label: 'user.code', value: this.user.code, inputtype: InputType.Display },
+            { label: 'user.name', value: this.user.name, inputtype: InputType.Display },
+            { label: 'user.age', value: this.user.age, inputtype: InputType.Display },
+            { label: 'user.sex', value: this.enumChangePipe.transform(this.user.sex, Enums.Sex), inputtype: InputType.Display },
+            { label: 'user.birthday', value: this.datePipe.transform(this.user.birthday, 'yyyy/MM/dd'), inputtype: InputType.Display },
+            { label: 'user.note', value: this.user.note, inputtype: InputType.DisplayArea },
+            { label: 'user.auth', value: selectedName, inputtype: InputType.DisplayArea },
+        ];
+        dialog.buttons = [
+            { class: 'btn-right', name: 'ok',     click: async () => { dialog.close('cancel'); } },
+        ];
 
-    //     // ダイアログの実行待ち
-    //     const result = await modalRef.result;
-    // }
+        // ダイアログの実行待ち
+        const result = await dialog.wait();
+    }
 
     // open user manage dialog
     async openUserMng() {
