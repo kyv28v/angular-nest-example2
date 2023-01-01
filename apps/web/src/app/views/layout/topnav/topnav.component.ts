@@ -237,7 +237,7 @@ export class TopnavComponent implements OnInit {
 
             // check confirm password
             if (dialog.items[1].value !== dialog.items[2].value) {
-                alert("wrong confirm password.");
+                alert("新しいパスワードが一致しません。");
                 return;
             }
 
@@ -253,7 +253,7 @@ export class TopnavComponent implements OnInit {
             const hashedNewPassword = crypto.SHA512(dialog.items[1].value).toString();
 
             // APIの呼び出し
-            const ret: any = await this.http.post('api/common/changePassword', {
+            const ret: any = await this.http.post('api/changePassword', {
                 userId: this.user.id,
                 oldPassword: hashedOldPassword,
                 newPassword: hashedNewPassword,
