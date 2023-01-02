@@ -106,6 +106,15 @@
               </option>
             </select>
           </td>
+          <!-- リストボックス2(ブランクあり) -->
+          <td *ngIf="item.inputtype == 'select2'">
+            <select class="form-control form-wide" [(ngModel)]="item.value" (change)="item.validateMessage = null;">
+              <option value=''></option>
+              <option *ngFor="let data of item.selectList" value={{data.id}}>
+                {{data.id}}:{{ data.name | translate }}
+              </option>
+            </select>
+          </td>
           <!-- ラジオボタン -->
           <td *ngIf="item.inputtype == 'radio'">
             <ng-container *ngFor="let data of item.selectList; index as i">

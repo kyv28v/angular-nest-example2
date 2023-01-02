@@ -18,6 +18,7 @@ export namespace InputType {
   export const DateTime = 'datetime';
   export const Time = 'time';
   export const Select = 'select';
+  export const Select2 = 'select2';
   export const Radio = 'radio';
   export const Check = 'check';
   export const Color = 'color';

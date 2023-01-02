@@ -32,6 +32,7 @@ export class RoomAccessMngComponent implements OnInit {
   public userList: any[] = [];
   public roomAccessMngs: any[];
   public searchList = '';
+  private serarchItems: any[] = [null, null, null, null, null];
 
     // 一覧定義
     // dataSource: MatTableDataSource<XXXModel>;
@@ -79,10 +80,36 @@ export class RoomAccessMngComponent implements OnInit {
     await this.searchRoomAccessMng();
   }
 
+  // 検索ダイアログの表示
+  async openSearchDialog() {
+    const dialog = this.simpleDialog.open();
+    dialog.title = 'search';
+    dialog.message = '';
+    dialog.items = [
+      { label: 'ID',            value: this.serarchItems[0], inputtype: InputType.Number,    },
+      { label: 'Room',          value: this.serarchItems[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
+      { label: 'User',          value: this.serarchItems[2], inputtype: InputType.Select2,  selectList : this.userList },
+      { label: 'EntryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTime,  },
+      { label: 'ExitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTime,  },
+    ];
+    dialog.buttons = [
+      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { dialog.close('ok'); } },
+    ];
+
+    // ダイアログの実行待ち
+    const result = await dialog.wait();
+    if (result !== 'ok') { return; }
+
+    // OKなら条件を保持して検索実行
+    this.serarchItems = dialog.items.map((t) => t.value);
+    await this.searchRoomAccessMng();
+  }
+
   // 検索
   async searchRoomAccessMng() {
     // 検索のクエリを実行
-    const values = JSON.stringify([this.searchList]);
+    const values = JSON.stringify(this.serarchItems);
     const ret: any = await this.http.get('api/query?sql=RoomAccessMng/getRoomAccessMngs.sql&values=' + values);
     if (ret.message !== null) {
       alert('Get room access datetime failed.\n' + ret.message);
