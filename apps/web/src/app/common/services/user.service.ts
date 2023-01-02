@@ -114,7 +114,7 @@ export class UserService {
     this.router.navigate(['/login']);
   }
 
-  authCheck(auth: number) {
+  authCheck(auth: number | unknown) {
     return (this.auth.indexOf(auth) !== -1);
   }
 }

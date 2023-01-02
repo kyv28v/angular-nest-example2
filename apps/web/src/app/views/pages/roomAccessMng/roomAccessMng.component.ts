@@ -1,10 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { Enums } from '../../../common/defines/enums';
+
+interface ColumnDefine {
+  type: string;
+  column: string;
+  name: string;
+  enum?: any[];
+  format?: string;
+  icon?: string;
+  method?: any;
+  color?: string;
+  auth?: number;
+}
 
 @Component({
   selector: 'app-room-access-mng',
@@ -15,10 +29,27 @@ import { Enums } from '../../../common/defines/enums';
 export class RoomAccessMngComponent implements OnInit {
 
   public enums = Enums;
-  public userList: any;
-  public roomAccessMngs: any;
+  public userList: any[] = [];
+  public roomAccessMngs: any[];
   public searchList = '';
 
+    // 一覧定義
+    // dataSource: MatTableDataSource<XXXModel>;
+    dataSource: MatTableDataSource<any>;
+    columnDefine: ColumnDefine[] = [
+      { type: 'number',   column: 'id',       name: 'ID',             format: '0.0-0'             },
+      { type: 'enum',     column: 'room_cd',  name: 'Room',           enum: Enums.Rooms           },
+      { type: 'enum',     column: 'user_id',  name: 'User',           enum: this.userList         },
+      { type: 'datetime', column: 'entry_dt', name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'  },
+      { type: 'datetime', column: 'exit_dt',  name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'  },
+      { type: 'string',   column: 'note',     name: 'Note',                                       },
+      { type: 'number',   column: 'qty',      name: 'qty',            format: '1.0-0'             },
+      { type: 'edit',     column: '__edit',   name: 'Edit',           method: this.regRoomAccessMng },
+      { type: 'delete',   column: '__delete', name: 'Delete',         method: this.delRoomAccessMng },
+    ];
+    dispCol = this.columnDefine.map((t) => t.column);
+    @ViewChild("GridSort", { static: true }) gridSort: MatSort;
+  
   constructor(
     private http: HttpRequestInterceptor,
     private simpleDialog: SimpleDialogComponent,
@@ -31,6 +62,18 @@ export class RoomAccessMngComponent implements OnInit {
     const users: any = await this.http.get('api/query?sql=Users/getUsers.sql&values=' + JSON.stringify(['']));
     const userList: any[] = users.rows as any[];
     this.userList = userList.map(({id, name}) => ({id, name}));
+
+    this.columnDefine = [
+      { type: 'number',   column: 'id',       name: 'ID',             format: '0.0-0'               },
+      { type: 'enum',     column: 'room_cd',  name: 'Room',           enum: Enums.Rooms             },
+      { type: 'enum',     column: 'user_id',  name: 'User',           enum: this.userList           },
+      { type: 'datetime', column: 'entry_dt', name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'datetime', column: 'exit_dt',  name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'string',   column: 'note',     name: 'Note',                                         },
+      { type: 'number',   column: 'qty',      name: 'qty',            format: '1.0-0'               },
+      { type: 'button',   column: '__edit',   name: 'Edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
+      { type: 'button',   column: '__delete', name: 'Delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
+    ];
 
     // 検索
     await this.searchRoomAccessMng();
@@ -47,6 +90,8 @@ export class RoomAccessMngComponent implements OnInit {
     }
 
     this.roomAccessMngs = ret.rows;
+    this.dataSource = new MatTableDataSource(ret.rows);
+    this.dataSource.sort = this.gridSort;
   }
 
   // 追加/更新

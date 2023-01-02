@@ -10,6 +10,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,6 +42,7 @@ import { RoomAccessMngComponent } from '../pages/roomAccessMng/roomAccessMng.com
         MatListModule,
         MatDialogModule,
         MatSortModule,
+        MatTableModule,
         MatProgressSpinnerModule,
         TranslateModule,
         FormsModule,

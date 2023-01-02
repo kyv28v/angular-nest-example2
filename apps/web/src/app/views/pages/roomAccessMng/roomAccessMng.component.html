@@ -47,3 +47,49 @@
   </table>
   </div>
 </div>
+
+<div class="table-container">
+  <mat-table mat-table [dataSource]="dataSource" matSort #GridSort="matSort">
+
+    <div *ngFor="let list of columnDefine; let i = index">
+      <ng-container [matColumnDef]="list.column" [ngSwitch]="list.type">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ list.name | translate }}
+        </th>
+        <!-- 文字列 -->
+        <ng-container *ngSwitchCase="'string'">
+          <td mat-cell *matCellDef="let data">
+            {{ data[list.column] }}
+          </td>
+        </ng-container>
+        <!-- 数値 -->
+        <ng-container *ngSwitchCase="'number'">
+          <td mat-cell *matCellDef="let data" [ngClass]="'label_right'">
+            {{ data[list.column] | number : list.format }}
+          </td>
+        </ng-container>
+        <!-- 日時 -->
+        <ng-container *ngSwitchCase="'datetime'">
+          <td mat-cell *matCellDef="let data">
+            {{ data[list.column] | date: list.format }}
+          </td>
+        </ng-container>
+        <!-- enum -->
+        <ng-container *ngSwitchCase="'enum'">
+          <td mat-cell *matCellDef="let data">
+            {{ data[list.column] | enumChange : list.enum }}
+          </td>
+        </ng-container>
+        <!-- ボタン -->
+        <ng-container *ngSwitchCase="'button'">
+          <td mat-cell *matCellDef="let data">
+            <mat-icon [color]="list.color" (click)="list.method(data)" *ngIf="user.authCheck(list.auth)">{{ list.icon }}</mat-icon>
+          </td>
+        </ng-container>
+      </ng-container>
+    </div>
+
+    <tr mat-header-row *matHeaderRowDef="dispCol; sticky: true"></tr>
+    <tr mat-row *matRowDef="let data; columns: dispCol"></tr>
+  </mat-table>
+</div>
