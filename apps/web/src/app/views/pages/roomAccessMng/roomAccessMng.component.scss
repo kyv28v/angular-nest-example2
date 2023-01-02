@@ -3,6 +3,13 @@ thead th {
   overflow: hidden;
 }
 
+.space-between-area {
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
 mat-table {
   width: 100%;
   vertical-align: middle;

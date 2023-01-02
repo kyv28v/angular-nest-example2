@@ -1,22 +1,10 @@
 <div class="form-group">
   <div class="form-row">
-    部屋
-    <div class="col-auto">
-      <select class="form-control" [(ngModel)]="searchList">
-        <option value=""></option>
-        <option *ngFor="let data of enums.Rooms" value={{data.id}}>
-          {{data.id}}:{{ data.name | translate }}
-        </option>
-      </select>
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-primary" (click)="openSearchDialog()">{{ 'Search' | translate }}</button>
+    <div class="space-between-area">
+      <button mat-raised-button color="primary" (click)="openSearchDialog()">{{ 'Search' | translate }}</button>
+      <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
     </div>
   </div>
-  <hr>
-  
-  <button class="btn btn-primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
-  <hr>
 
   <div class="table-responsive">
   <table class="table table-bordered">
@@ -40,7 +28,7 @@
         <td>{{ data.entry_dt | date:"yyyy/MM/dd HH:mm" }}</td>
         <td>{{ data.exit_dt | date:"yyyy/MM/dd HH:mm" }}</td>
         <td>{{ data.note }}</td>
-        <td *ngIf="user.authCheck(22)"><mat-icon color="primary"(click)="regRoomAccessMng(data)">edit</mat-icon></td>
+        <td *ngIf="user.authCheck(22)"><mat-icon color="primary" (click)="regRoomAccessMng(data)">edit</mat-icon></td>
         <td *ngIf="user.authCheck(23)"><mat-icon color="warn" (click)="delRoomAccessMng(data)">delete_forever</mat-icon></td>
       </tr>
     </tbody>
