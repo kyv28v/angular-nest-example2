@@ -64,7 +64,7 @@ export class TopnavComponent implements OnInit {
             { label: 'user.auth', value: selectedName, inputtype: InputType.DisplayArea },
         ];
         dialog.buttons = [
-            { class: 'btn-right', name: 'ok',     click: async () => { dialog.close('cancel'); } },
+            { class: 'btn-right', color: 'primary', name: 'ok',     click: async () => { dialog.close('cancel'); } },
         ];
 
         // ダイアログの実行待ち

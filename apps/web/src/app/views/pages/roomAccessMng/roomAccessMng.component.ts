@@ -109,8 +109,8 @@ export class RoomAccessMngComponent implements OnInit {
       { label: 'Note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
     ];
     dialog.buttons = [
-      { class: 'btn-left',  name: 'Cancel', click: async () => { dialog.close('cancel'); } },
-      { class: 'btn-right', name: 'OK',     click: async () => { this.regRoomAccessMngExec(data, dialog); } },
+      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { this.regRoomAccessMngExec(data, dialog); } },
     ];
 
     // ダイアログの実行待ち
