@@ -7,7 +7,7 @@
             <mat-icon class="sidenav-icon">people</mat-icon> {{ 'User Manage' | translate }}
         </a>
         <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/roomAccessMng']" (click)="selectMenu()" *ngIf="user.authCheck(20)">
-            <mat-icon class="sidenav-icon">access_time</mat-icon> {{ 'Room Access Manage' | translate }}
+            <mat-icon class="sidenav-icon">access_time</mat-icon> {{ 'roomAccessMng.title' | translate }}
         </a>
     </mat-nav-list>
 </div>
