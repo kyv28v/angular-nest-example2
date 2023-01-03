@@ -43,15 +43,15 @@ export class RoomAccessMngComponent implements OnInit {
     this.userList = userList.map(({id, name}) => ({id, name}));
 
     this.columnDefine = [
-      { type: 'number',   column: 'id',       name: 'ID',             format: '0.0-0'               },
-      { type: 'enum',     column: 'room_cd',  name: 'Room',           enum: Enums.Rooms             },
-      { type: 'enum',     column: 'user_id',  name: 'User',           enum: this.userList           },
-      { type: 'datetime', column: 'entry_dt', name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'datetime', column: 'exit_dt',  name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'string',   column: 'note',     name: 'Note',                                         },
-      { type: 'number',   column: 'qty',      name: 'qty',            format: '1.0-0'               },
-      { type: 'button',   column: '__edit',   name: 'Edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
-      { type: 'button',   column: '__delete', name: 'Delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
+      { type: 'number',   column: 'id',           name: 'ID',             format: '0.0-0'               },
+      { type: 'enum',     column: 'room_cd',      name: 'Room',           enum: Enums.Rooms             },
+      { type: 'enum',     column: 'user_id',      name: 'User',           enum: this.userList           },
+      { type: 'datetime', column: 'entry_dt',     name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'datetime', column: 'exit_dt',      name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'number',   column: 'access_time',  name: 'accessTime',     format: '1.2-2'               },
+      { type: 'string',   column: 'note',         name: 'Note',                                         },
+      { type: 'button',   column: '__edit',       name: 'Edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
+      { type: 'button',   column: '__delete',     name: 'Delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
     ];
 
     // 検索
