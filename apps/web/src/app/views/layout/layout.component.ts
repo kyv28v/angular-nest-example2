@@ -66,7 +66,7 @@ export class LayoutComponent implements OnInit {
 
     // resize sidebar width
     onResized(event: ResizedEvent) {
-        const sidebarWidth = event.newRect.width.toString() + 'px';
+        const sidebarWidth = (event.newRect.width + 1).toString() + 'px';       // 1pxずれてしまうのでここで補正する
         localStorage.setItem('sidebar.width', sidebarWidth);
         console.log("set sidebar width:" + sidebarWidth);
     }
