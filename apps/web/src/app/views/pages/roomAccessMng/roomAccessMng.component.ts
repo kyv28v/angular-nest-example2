@@ -43,15 +43,15 @@ export class RoomAccessMngComponent implements OnInit {
     this.userList = userList.map(({id, name}) => ({id, name}));
 
     this.columnDefine = [
-      { type: 'number',   column: 'id',           name: 'ID',             format: '0.0-0'               },
-      { type: 'enum',     column: 'room_cd',      name: 'Room',           enum: Enums.Rooms             },
-      { type: 'enum',     column: 'user_id',      name: 'User',           enum: this.userList           },
-      { type: 'datetime', column: 'entry_dt',     name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'datetime', column: 'exit_dt',      name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'number',   column: 'access_time',  name: 'accessTime',     format: '1.2-2'               },
-      { type: 'string',   column: 'note',         name: 'Note',                                         },
-      { type: 'button',   column: '__edit',       name: 'Edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
-      { type: 'button',   column: '__delete',     name: 'Delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
+      { type: 'number',   column: 'id',           name: 'roomAccessMng.id',             format: '0.0-0'               },
+      { type: 'enum',     column: 'room_cd',      name: 'roomAccessMng.room',           enum: Enums.Rooms             },
+      { type: 'enum',     column: 'user_id',      name: 'roomAccessMng.user',           enum: this.userList           },
+      { type: 'datetime', column: 'entry_dt',     name: 'roomAccessMng.entryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'datetime', column: 'exit_dt',      name: 'roomAccessMng.exitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
+      { type: 'number',   column: 'access_time',  name: 'roomAccessMng.accessTime',     format: '1.2-2'               },
+      { type: 'string',   column: 'note',         name: 'note',                                                       },
+      { type: 'button',   column: '__edit',       name: 'edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
+      { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
     ];
 
     // 検索
@@ -64,11 +64,11 @@ export class RoomAccessMngComponent implements OnInit {
     dialog.title = 'search';
     dialog.message = '';
     dialog.items = [
-      { label: 'ID',            value: this.serarchItems[0], inputtype: InputType.Number,    },
-      { label: 'Room',          value: this.serarchItems[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
-      { label: 'User',          value: this.serarchItems[2], inputtype: InputType.Select2,  selectList : this.userList },
-      { label: 'EntryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTime,  },
-      { label: 'ExitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTime,  },
+      { label: 'roomAccessMng.id',            value: this.serarchItems[0], inputtype: InputType.Number,    },
+      { label: 'roomAccessMng.room',          value: this.serarchItems[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
+      { label: 'roomAccessMng.user',          value: this.serarchItems[2], inputtype: InputType.Select2,  selectList : this.userList },
+      { label: 'roomAccessMng.entryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTime,  },
+      { label: 'roomAccessMng.exitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTime,  },
     ];
     dialog.buttons = [
       { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
@@ -103,14 +103,14 @@ export class RoomAccessMngComponent implements OnInit {
   async regRoomAccessMng(data: any) {
     // 入退室日時登録用のダイアログ表示
     const dialog = this.simpleDialog.open();
-    dialog.title = 'Register room access datetime';
+    dialog.title = 'roomAccessMng.register';
     dialog.message = '';
     dialog.items = [
-      { label: 'Room', value: data?.room_cd, inputtype: InputType.Select, required: true, selectList : Enums.Rooms },
-      { label: 'User', value: data?.user_id, inputtype: InputType.Select, required: true, selectList : this.userList },
-      { label: 'EntryDateTime', value: data?.entry_dt, inputtype: InputType.DateTime, required: true, placeholder: '2020/01/01 09:00' },
-      { label: 'ExitDateTime', value: data?.exit_dt, inputtype: InputType.DateTime, required: false, placeholder: '2020/01/02 18:00' },
-      { label: 'Note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
+      { label: 'roomAccessMng.room', value: data?.room_cd, inputtype: InputType.Select, required: true, selectList : Enums.Rooms },
+      { label: 'roomAccessMng.user', value: data?.user_id, inputtype: InputType.Select, required: true, selectList : this.userList },
+      { label: 'roomAccessMng.entryDateTime', value: data?.entry_dt, inputtype: InputType.DateTime, required: true, placeholder: '2020/01/01 09:00' },
+      { label: 'roomAccessMng.exitDateTime', value: data?.exit_dt, inputtype: InputType.DateTime, required: false, placeholder: '2020/01/02 18:00' },
+      { label: 'note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
     ];
     dialog.buttons = [
       { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
@@ -132,7 +132,7 @@ export class RoomAccessMngComponent implements OnInit {
     // 確認ダイアログの表示
     const result = await this.simpleDialog.confirm(
       'Confirm',
-      'Do you want to register room access datetime?');
+      'roomAccessMng.registerConfirmMessage');
     if (result !== 'ok') { return; }
 
     // APIの呼び出し
@@ -163,7 +163,7 @@ export class RoomAccessMngComponent implements OnInit {
     // 確認ダイアログの表示
     const result = await this.simpleDialog.confirm(
       'Confirm',
-      'Do you want to delete room access datetime?');
+      'roomAccessMng.deleteConfirmMessage');
     if (result !== 'ok') { return; }
 
     // 削除のクエリを実行
