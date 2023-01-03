@@ -6,19 +6,9 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
+import { ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { Enums } from '../../../common/defines/enums';
 
-interface ColumnDefine {
-  type: string;
-  column: string;
-  name: string;
-  enum?: any[];
-  format?: string;
-  icon?: string;
-  method?: any;
-  color?: string;
-  auth?: number;
-}
 
 @Component({
   selector: 'app-room-access-mng',
@@ -34,22 +24,10 @@ export class RoomAccessMngComponent implements OnInit {
   public searchList = '';
   private serarchItems: any[] = [null, null, null, null, null];
 
-    // 一覧定義
-    // dataSource: MatTableDataSource<XXXModel>;
-    dataSource: MatTableDataSource<any>;
-    columnDefine: ColumnDefine[] = [
-      { type: 'number',   column: 'id',       name: 'ID',             format: '0.0-0'             },
-      { type: 'enum',     column: 'room_cd',  name: 'Room',           enum: Enums.Rooms           },
-      { type: 'enum',     column: 'user_id',  name: 'User',           enum: this.userList         },
-      { type: 'datetime', column: 'entry_dt', name: 'EntryDateTime',  format: 'yyyy/MM/dd HH:mm'  },
-      { type: 'datetime', column: 'exit_dt',  name: 'ExitDateTime',   format: 'yyyy/MM/dd HH:mm'  },
-      { type: 'string',   column: 'note',     name: 'Note',                                       },
-      { type: 'number',   column: 'qty',      name: 'qty',            format: '1.0-0'             },
-      { type: 'edit',     column: '__edit',   name: 'Edit',           method: this.regRoomAccessMng },
-      { type: 'delete',   column: '__delete', name: 'Delete',         method: this.delRoomAccessMng },
-    ];
-    dispCol = this.columnDefine.map((t) => t.column);
-    @ViewChild("GridSort", { static: true }) gridSort: MatSort;
+  // 一覧定義
+  // dataSource: MatTableDataSource<XXXModel>;
+  dataSource: MatTableDataSource<any>;
+  columnDefine: ColumnDefine[];
   
   constructor(
     private http: HttpRequestInterceptor,
@@ -118,7 +96,6 @@ export class RoomAccessMngComponent implements OnInit {
 
     this.roomAccessMngs = ret.rows;
     this.dataSource = new MatTableDataSource(ret.rows);
-    this.dataSource.sort = this.gridSort;
   }
 
   // 追加/更新
