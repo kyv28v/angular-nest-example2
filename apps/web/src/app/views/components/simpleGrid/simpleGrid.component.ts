@@ -36,7 +36,9 @@ export class SimpleGridComponent implements OnChanges {
 
   // 変更イベント
   ngOnChanges() {
-    this.dispCol = this.columnDefine.map((t) => t.column);
-    this.dataSource.sort = this.gridSort;
+    if (this.columnDefine && this.dataSource) {
+      this.dispCol = this.columnDefine?.map((t) => t.column);
+      this.dataSource.sort = this.gridSort;
+    }
   }
 }
