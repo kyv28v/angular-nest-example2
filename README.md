@@ -8,10 +8,10 @@ DBはPostgreSQLを使用しています。
 
 ・node.js       16.12.0  
 ・npm           8.1.0  
-・PostgreSql    12.1
+・PostgreSql    15.1
 
 ## DBの準備
- DBは、PostgreSqlを適当にインストールし、テスト用のテーブル、初期ユーザを作成してください。
+DBは、PostgreSqlを適当にインストールし、テスト用のテーブル、初期ユーザを作成してください。
 
 ・テスト用のテーブル、初期ユーザ作成
 ```
@@ -19,6 +19,11 @@ DBはPostgreSQLを使用しています。
 # CREATE TABLE room_access_mng (id serial, room_cd varchar(10), user_id int, entry_dt timestamptz, exit_dt timestamptz, note varchar(256));
 # INSERT INTO users (code, name, password, note, auth) VALUES ('admin', 'admin','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456', '[10, 11, 12, 13, 20, 21, 22, 23]');
 # INSERT INTO users (code, name, password, note, auth) VALUES ('guest', 'guest','ba3253876aed6bc22d4a6ff53d8406c6ad864195ed144ab5c87621b6c233b548baeae6956df346ec8c17f5ea10f35ee3cbc514797ed7ddd3145464e2a0bab413', 'password:123456', '[20, 21, 22, 23]');
+```
+
+DBのタイムゾーンを変更してください。
+```
+ALTER DATABASE データベース名 SET timezone TO 'Asia/Tokyo';
 ```
 
 ・接続設定  

@@ -21,7 +21,7 @@
         <!-- 日時 -->
         <ng-container *ngSwitchCase="'datetime'">
           <td mat-cell *matCellDef="let data">
-            {{ data[list.column] | date: list.format :'+0000':'ja' }}
+            {{ data[list.column] | date: list.format }}
           </td>
         </ng-container>
         <!-- enum -->
