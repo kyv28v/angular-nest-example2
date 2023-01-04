@@ -1,5 +1,5 @@
 <div class="table-container">
-  <mat-table mat-table [dataSource]="dataSource" matSort #GridSort="matSort">
+  <mat-table mat-table [dataSource]="dataSource" matSort #GridSort="matSort" (matSortChange)="onSortChange($event)">
 
     <div *ngFor="let list of columnDefine; let i = index">
       <ng-container [matColumnDef]="list.column" [ngSwitch]="list.type">
