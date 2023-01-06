@@ -23,6 +23,7 @@ export class RoomAccessMngComponent implements OnInit {
   public roomAccessMngs: any[];
   public searchList = '';
   private serarchItems: any[] = [[null, null], null, null, [null, null], [null, null]];
+  public searchConditionString: string;
 
   // 一覧定義
   // dataSource: MatTableDataSource<XXXModel>;
@@ -106,6 +107,7 @@ export class RoomAccessMngComponent implements OnInit {
 
     this.roomAccessMngs = ret.rows;
     this.dataSource = new MatTableDataSource(ret.rows);
+    this.createSearchCondition();
   }
 
   // 追加/更新
@@ -186,5 +188,30 @@ export class RoomAccessMngComponent implements OnInit {
 
     // 再検索
     await this.searchRoomAccessMng();
+  }
+
+  // 検索条件の表示
+  createSearchCondition() {
+    let str = "";
+    if (this.serarchItems[0][0] || this.serarchItems[0][1]) {
+      str += "ID：" + (this.serarchItems[0][0] || '') + '～' + (this.serarchItems[0][1] || '');
+    }
+    if (this.serarchItems[1]) {
+      if (str) str += ', ';
+      str += "部屋：" + this.serarchItems[1];
+    }
+    if (this.serarchItems[2]) {
+      if (str) str += ', ';
+      str += "ユーザ：" + this.serarchItems[1];
+    }
+    if (this.serarchItems[3][0] || this.serarchItems[3][1]) {
+      if (str) str += ', ';
+      str += "入室日時：" + (this.serarchItems[3][0] || '') + '～' + (this.serarchItems[3][1] || '');
+    }
+    if (this.serarchItems[4][0] || this.serarchItems[4][1]) {
+      if (str) str += ', ';
+      str += "退室日時：" + (this.serarchItems[4][0] || '') + '～' + (this.serarchItems[4][1] || '');
+    }
+    this.searchConditionString = str;
   }
 }

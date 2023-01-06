@@ -1,7 +1,10 @@
 <div class="form-group">
   <div class="form-row">
     <div class="space-between-area">
-      <button mat-raised-button color="primary" (click)="openSearchDialog()">{{ 'Search' | translate }}</button>
+      <div>
+        <button mat-raised-button color="primary" (click)="openSearchDialog()">{{ 'Search' | translate }}</button>
+        {{ searchConditionString }}
+      </div>
       <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
     </div>
   </div>
