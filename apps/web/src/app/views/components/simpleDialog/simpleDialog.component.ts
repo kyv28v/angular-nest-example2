@@ -12,10 +12,12 @@ export namespace InputType {
   export const DisplayArea = 'displayArea';
   export const Text = 'text';
   export const Number = 'number';
+  export const NumberRange = 'numberRange';
   export const Password = 'password';
   export const TextArea = 'textarea';
   export const Date = 'date';
   export const DateTime = 'datetime';
+  export const DateTimeRange = 'datetimeRange';
   export const Time = 'time';
   export const Select = 'select';
   export const Select2 = 'select2';

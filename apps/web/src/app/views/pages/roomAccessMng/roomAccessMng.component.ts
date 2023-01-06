@@ -22,7 +22,7 @@ export class RoomAccessMngComponent implements OnInit {
   public userList: any[] = [];
   public roomAccessMngs: any[];
   public searchList = '';
-  private serarchItems: any[] = [null, null, null, null, null];
+  private serarchItems: any[] = [[null, null], null, null, [null, null], [null, null]];
 
   // 一覧定義
   // dataSource: MatTableDataSource<XXXModel>;
@@ -64,11 +64,11 @@ export class RoomAccessMngComponent implements OnInit {
     dialog.title = 'search';
     dialog.message = '';
     dialog.items = [
-      { label: 'roomAccessMng.id',            value: this.serarchItems[0], inputtype: InputType.Number,    },
+      { label: 'roomAccessMng.id',            value: this.serarchItems[0], inputtype: InputType.NumberRange,    },
       { label: 'roomAccessMng.room',          value: this.serarchItems[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
       { label: 'roomAccessMng.user',          value: this.serarchItems[2], inputtype: InputType.Select2,  selectList : this.userList },
-      { label: 'roomAccessMng.entryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTime,  },
-      { label: 'roomAccessMng.exitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTime,  },
+      { label: 'roomAccessMng.entryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTimeRange,  },
+      { label: 'roomAccessMng.exitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTimeRange,  },
     ];
     dialog.buttons = [
       { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
@@ -87,7 +87,17 @@ export class RoomAccessMngComponent implements OnInit {
   // 検索
   async searchRoomAccessMng() {
     // 検索のクエリを実行
-    const values = JSON.stringify(this.serarchItems);
+    const values = JSON.stringify([
+      this.serarchItems[0][0],
+      this.serarchItems[0][1],
+      this.serarchItems[1],
+      this.serarchItems[2],
+      this.serarchItems[3][0],
+      this.serarchItems[3][1],
+      this.serarchItems[4][0],
+      this.serarchItems[4][1],
+    ]);
+
     const ret: any = await this.http.get('api/query?sql=RoomAccessMng/getRoomAccessMngs.sql&values=' + values);
     if (ret.message !== null) {
       alert('Get room access datetime failed.\n' + ret.message);

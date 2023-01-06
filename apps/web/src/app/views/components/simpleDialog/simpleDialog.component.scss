@@ -41,3 +41,8 @@ label {
     display: inline-block;
     margin: .3rem;
 }
+
+.space-between-area {
+    display: flex;
+    justify-content: space-between;
+}

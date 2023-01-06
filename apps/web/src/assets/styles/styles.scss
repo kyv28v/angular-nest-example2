@@ -57,14 +57,23 @@ body {
 // flatpickr
 .flatpickr-input {
     float: left;
-    width: 100%;
-    margin-right: -50px;
-    padding-right: 50px;
-    box-sizing: border-box;  
+    width: 200px;
+    margin-right: -40px;
+    padding-right: 40px;
+    box-sizing: border-box;
+    input {
+        width: 200px !important;
+        background-color: white !important;
+    }
 }
 .flatpickr-clear {
     float: right;
-    width: 50px;
+    width: 40px;
+    button {
+        width: 40px;
+        min-width: 40px;
+        padding: 0px
+    }
 }
 
 // ngx-toastr

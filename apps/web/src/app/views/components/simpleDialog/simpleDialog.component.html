@@ -37,6 +37,13 @@
           <td *ngIf="item.inputtype == 'number'">
             <input class="form-control form-wide" type="number" name="item_value" (keyup)="item.validateMessage = null;"
               [(ngModel)]="item.value" placeholder={{item.placeholder}}>
+          <!-- number（範囲） -->
+          <td *ngIf="item.inputtype == 'numberRange'" class="space-between-area">
+            <input class="form-control form-wide" type="number" name="item_value" (keyup)="item.validateMessage = null;"
+              [(ngModel)]="item.value[0]" placeholder={{item.placeholder}}>
+            <div style="padding: 5px;">～</div>
+            <input class="form-control form-wide" type="number" name="item_value" (keyup)="item.validateMessage = null;"
+              [(ngModel)]="item.value[1]" placeholder={{item.placeholder}}>
           <!-- パスワード -->
           <td *ngIf="item.inputtype == 'password'">
             <input class="form-control form-wide" type="password" name="item_value" (keyup)="item.validateMessage = null;"
@@ -61,7 +68,6 @@
             <div class="flatpickr-input">
               <input
                 class="form-control form-wide"
-                style="background-color: white"
                 type="text"
                 (change)="item.validateMessage = null;"
                 mwlFlatpickr
@@ -81,7 +87,6 @@
             <div class="flatpickr-input">
               <input
                 class="form-control form-wide"
-                style="background-color: white"
                 type="text"
                 (change)="item.validateMessage = null;"
                 mwlFlatpickr
@@ -94,6 +99,46 @@
             </div>
             <div class="flatpickr-clear">
                 <button mat-button (click)="item.value = null;">
+                  <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+          </td>
+          <!-- 日時（範囲） -->
+          <td *ngIf="item.inputtype == 'datetimeRange'" class="space-between-area">
+            <div class="flatpickr-input">
+              <input
+                class="form-control form-wide"
+                type="text"
+                (change)="item.validateMessage = null;"
+                mwlFlatpickr
+                [(ngModel)]="item.value[0]"
+                [enableTime]=true
+                [time24hr]=true
+                [dateFormat]="'Y/m/d H:i'"
+                [convertModelValue]="false"
+              >
+            </div>
+            <div class="flatpickr-clear">
+                <button mat-button (click)="item.value[0] = null;">
+                  <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+            <div style="padding: 5px;">～</div>
+            <div class="flatpickr-input">
+              <input
+                class="form-control form-wide"
+                type="text"
+                (change)="item.validateMessage = null;"
+                mwlFlatpickr
+                [(ngModel)]="item.value[1]"
+                [enableTime]=true
+                [time24hr]=true
+                [dateFormat]="'Y/m/d H:i'"
+                [convertModelValue]="false"
+              >
+            </div>
+            <div class="flatpickr-clear">
+                <button mat-button (click)="item.value[1] = null;">
                   <mat-icon>clear</mat-icon>
                 </button>
             </div>
