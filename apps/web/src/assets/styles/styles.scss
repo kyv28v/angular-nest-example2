@@ -67,7 +67,9 @@ body {
     }
 }
 .flatpickr-clear {
-    float: right;
+    float: left;
+    margin-right: 0px;
+    padding-right: 0px;
     width: 40px;
     button {
         width: 40px;
