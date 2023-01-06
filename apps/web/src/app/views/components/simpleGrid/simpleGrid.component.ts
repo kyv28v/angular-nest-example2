@@ -19,7 +19,7 @@ export interface ColumnDefine {
 }
 
 @Component({
-  selector: 'app-simple-grid-content',
+  selector: 'app-simple-grid',
   templateUrl: './simpleGrid.component.html',
   styleUrls: ['./simpleGrid.component.scss'],
 })

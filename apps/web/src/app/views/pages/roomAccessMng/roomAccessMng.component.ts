@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
-import { MatSort } from "@angular/material/sort";
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
+import { SearchConditionComponent } from '../../components/searchCondition/searchCondition.component';
 import { ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { Enums } from '../../../common/defines/enums';
 
@@ -20,19 +19,16 @@ export class RoomAccessMngComponent implements OnInit {
 
   public enums = Enums;
   public userList: any[] = [];
-  public roomAccessMngs: any[];
-  public searchList = '';
-  private serarchItems: any[] = [[null, null], null, null, [null, null], [null, null]];
-  public searchConditionString: string;
 
   // 一覧定義
   // dataSource: MatTableDataSource<XXXModel>;
   dataSource: MatTableDataSource<any>;
   columnDefine: ColumnDefine[];
-  
+
   constructor(
     private http: HttpRequestInterceptor,
     private simpleDialog: SimpleDialogComponent,
+    public searchCondition: SearchConditionComponent,
     public user: UserService,
   ) { }
 
@@ -43,6 +39,8 @@ export class RoomAccessMngComponent implements OnInit {
     const userList: any[] = users.rows as any[];
     this.userList = userList.map(({id, name}) => ({id, name}));
 
+    // 一覧のカラム定義をセット
+    // ※ userList のようにDBデータを Enum として使用する場合はOnInitで定義する。そうでない場合は変数宣言時に定義してもよい。
     this.columnDefine = [
       { type: 'number',   column: 'id',           name: 'roomAccessMng.id',             format: '0.0-0'               },
       { type: 'enum',     column: 'room_cd',      name: 'roomAccessMng.room',           enum: Enums.Rooms             },
@@ -55,33 +53,18 @@ export class RoomAccessMngComponent implements OnInit {
       { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
     ];
 
+    // 検索条件をセット
+    this.searchCondition.values = [[null, null], null, null, [null, null], [null, null]];
+    this.searchCondition.items = [
+      { label: 'roomAccessMng.id',            value: this.searchCondition.values[0], inputtype: InputType.NumberRange,    },
+      { label: 'roomAccessMng.room',          value: this.searchCondition.values[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
+      { label: 'roomAccessMng.user',          value: this.searchCondition.values[2], inputtype: InputType.Select2,  selectList : this.userList },
+      { label: 'roomAccessMng.entryDateTime', value: this.searchCondition.values[3], inputtype: InputType.DateTimeRange,  },
+      { label: 'roomAccessMng.exitDateTime',  value: this.searchCondition.values[4], inputtype: InputType.DateTimeRange,  },
+    ];
+    this.searchCondition.method = async () => await this.searchRoomAccessMng();
+
     // 検索
-    await this.searchRoomAccessMng();
-  }
-
-  // 検索ダイアログの表示
-  async openSearchDialog() {
-    const dialog = this.simpleDialog.open();
-    dialog.title = 'search';
-    dialog.message = '';
-    dialog.items = [
-      { label: 'roomAccessMng.id',            value: this.serarchItems[0], inputtype: InputType.NumberRange,    },
-      { label: 'roomAccessMng.room',          value: this.serarchItems[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
-      { label: 'roomAccessMng.user',          value: this.serarchItems[2], inputtype: InputType.Select2,  selectList : this.userList },
-      { label: 'roomAccessMng.entryDateTime', value: this.serarchItems[3], inputtype: InputType.DateTimeRange,  },
-      { label: 'roomAccessMng.exitDateTime',  value: this.serarchItems[4], inputtype: InputType.DateTimeRange,  },
-    ];
-    dialog.buttons = [
-      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
-      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { dialog.close('ok'); } },
-    ];
-
-    // ダイアログの実行待ち
-    const result = await dialog.wait();
-    if (result !== 'ok') { return; }
-
-    // OKなら条件を保持して検索実行
-    this.serarchItems = dialog.items.map((t) => t.value);
     await this.searchRoomAccessMng();
   }
 
@@ -89,14 +72,14 @@ export class RoomAccessMngComponent implements OnInit {
   async searchRoomAccessMng() {
     // 検索のクエリを実行
     const values = JSON.stringify([
-      this.serarchItems[0][0],
-      this.serarchItems[0][1],
-      this.serarchItems[1],
-      this.serarchItems[2],
-      this.serarchItems[3][0],
-      this.serarchItems[3][1],
-      this.serarchItems[4][0],
-      this.serarchItems[4][1],
+      this.searchCondition.values[0][0],
+      this.searchCondition.values[0][1],
+      this.searchCondition.values[1],
+      this.searchCondition.values[2],
+      this.searchCondition.values[3][0],
+      this.searchCondition.values[3][1],
+      this.searchCondition.values[4][0],
+      this.searchCondition.values[4][1],
     ]);
 
     const ret: any = await this.http.get('api/query?sql=RoomAccessMng/getRoomAccessMngs.sql&values=' + values);
@@ -105,9 +88,7 @@ export class RoomAccessMngComponent implements OnInit {
       return;
     }
 
-    this.roomAccessMngs = ret.rows;
     this.dataSource = new MatTableDataSource(ret.rows);
-    this.createSearchCondition();
   }
 
   // 追加/更新
@@ -188,30 +169,5 @@ export class RoomAccessMngComponent implements OnInit {
 
     // 再検索
     await this.searchRoomAccessMng();
-  }
-
-  // 検索条件の表示
-  createSearchCondition() {
-    let str = "";
-    if (this.serarchItems[0][0] || this.serarchItems[0][1]) {
-      str += "ID：" + (this.serarchItems[0][0] || '') + '～' + (this.serarchItems[0][1] || '');
-    }
-    if (this.serarchItems[1]) {
-      if (str) str += ', ';
-      str += "部屋：" + this.serarchItems[1];
-    }
-    if (this.serarchItems[2]) {
-      if (str) str += ', ';
-      str += "ユーザ：" + this.serarchItems[1];
-    }
-    if (this.serarchItems[3][0] || this.serarchItems[3][1]) {
-      if (str) str += ', ';
-      str += "入室日時：" + (this.serarchItems[3][0] || '') + '～' + (this.serarchItems[3][1] || '');
-    }
-    if (this.serarchItems[4][0] || this.serarchItems[4][1]) {
-      if (str) str += ', ';
-      str += "退室日時：" + (this.serarchItems[4][0] || '') + '～' + (this.serarchItems[4][1] || '');
-    }
-    this.searchConditionString = str;
   }
 }

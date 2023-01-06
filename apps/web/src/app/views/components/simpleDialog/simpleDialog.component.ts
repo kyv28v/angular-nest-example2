@@ -30,7 +30,7 @@ export namespace InputType {
   providedIn: 'root'
 })
 @Component({
-  selector: 'app-simple-dialog-content',
+  selector: 'app-simple-dialog',
   templateUrl: './simpleDialog.component.html',
   styleUrls: ['./simpleDialog.component.scss'],
 })

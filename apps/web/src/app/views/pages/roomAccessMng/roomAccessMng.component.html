@@ -1,20 +1,31 @@
 <div class="form-group">
   <div class="form-row">
     <div class="space-between-area">
-      <div>
+      <!-- <div>
         <button mat-raised-button color="primary" (click)="openSearchDialog()">{{ 'Search' | translate }}</button>
         {{ searchConditionString }}
-      </div>
+      </div> -->
+      <!-- <app-search-condition
+        [title]="'search'"
+        [searchItems]="searchItems"
+        [searchValues]="searchValues"
+        [searchMethod]="searchMethod"
+        [searchCondition]="searchCondition"
+      > -->
+      <app-search-condition
+        [searchCondition]="searchCondition"
+      >
+      </app-search-condition>
       <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
     </div>
   </div>
 </div>
 
 <div class="grid-area">
-  <app-simple-grid-content
+  <app-simple-grid
     [gridName]="'roomAccessMng'"
     [columnDefine]="columnDefine"
     [dataSource]="dataSource"
   >
-  </app-simple-grid-content>
+  </app-simple-grid>
 </div>
