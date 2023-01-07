@@ -5,7 +5,10 @@
         [searchCondition]="searchCondition"
       >
       </app-search-condition>
-      <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
+      <div>
+        <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
+        <button mat-raised-button color="primary" (click)="simpleGrid.downloadCSV()">{{ 'downloadCsv' | translate }}</button>
+      </div>
     </div>
   </div>
 </div>

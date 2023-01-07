@@ -61,6 +61,8 @@
     "Registering": "登録中...",
     "Updating": "更新中...",
     "Deleting": "削除中...",
+    "Downloading": "ダウンロード中...",
+    "downloadCsv": "CSV",
     "login": {
         "login": "ログイン",
         "logout": "ログアウト",

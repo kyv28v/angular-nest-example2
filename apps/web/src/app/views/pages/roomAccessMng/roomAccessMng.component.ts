@@ -7,6 +7,7 @@ import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { SearchConditionComponent } from '../../components/searchCondition/searchCondition.component';
+import { SimpleGridComponent } from '../../components/simpleGrid/simpleGrid.component';
 import { ProgressSpinnerService } from '../../components/progressSpinner/progressSpinner.service';
 import { ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { Enums } from '../../../common/defines/enums';
@@ -24,9 +25,11 @@ export class RoomAccessMngComponent implements OnInit {
   public userList: any[] = [];
 
   // 一覧定義
-  // dataSource: MatTableDataSource<XXXModel>;
   dataSource: MatTableDataSource<any>;
   columnDefine: ColumnDefine[];
+
+  @ViewChild(SimpleGridComponent)
+  public simpleGrid: SimpleGridComponent;
 
   constructor(
     private http: HttpRequestInterceptor,

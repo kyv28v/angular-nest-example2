@@ -3,7 +3,10 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 
 import { ResizedEvent } from 'angular-resize-event';
+import { TranslateService } from '@ngx-translate/core';
 
+import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
+import { ProgressSpinnerService } from '../../components/progressSpinner/progressSpinner.service';
 import { UserService } from '../../../common/services/user.service';
 
 export interface ColumnDefine {
@@ -34,6 +37,9 @@ export class SimpleGridComponent implements OnChanges {
 
   // constructor
   constructor(
+    private simpleDialog: SimpleDialogComponent,
+    private spinner: ProgressSpinnerService,
+    public translate: TranslateService,
     public user: UserService,
   ) { }
 
@@ -105,5 +111,71 @@ export class SimpleGridComponent implements OnChanges {
   // テーブルのソート条件を変更したとき、ソート条件をローカルストレージに保存する。
   onSortChange(event: any) {
     localStorage.setItem('tableSort_' + this.gridName, JSON.stringify(event));
+  }
+
+  // CSVダウンロード
+  async downloadCSV() {
+    try {
+      console.log("downloadCSV start. " + this.gridName)
+
+      // show spinner
+      this.spinner.show();
+      this.spinner.setMessage(this.translate.instant('Downloading'));
+
+      // // ヘッダ部の生成
+      // let csv = this.columnDefine
+      //   .filter(col => col.type != 'button')              // ボタン列は除外
+      //   .map((col) => this.translate.instant(col.name))   // name定義を変換
+      //   .join(',');
+
+      // // データ部の生成
+      // let row = '';
+      // for (let i = 0; i < this.dataSource.data.length; i++) {
+      //   csv += '\n';
+
+      //   for (let j = 0; j < this.columnDefine.length; j++) {
+      //     if (row) row += ',';
+      //     row += this.dataSource.data[i][this.columnDefine[j].column] || '';
+      //   }
+
+      //   csv += row;
+      //   row = '';
+      // }
+
+      // CSVデータの生成
+      // ※ dataSource から取得すると書式変換などが反映されていないので、HTMLのテーブルから取得する。
+      let table = document.getElementById('mat-table');
+      let csv = '';
+      let row = '';
+      if (table) {
+        for (let i = 0; i < table.children.length; i++) {
+          for(let j = 0; j < table.children[i].children.length; j++){
+            if (this.columnDefine[j].type == 'button') continue;
+            if (row) row += ',';
+            row += table.children[i].children[j].textContent;
+          }
+          csv += row + '\n';
+          row = '';
+        }
+      }
+
+      // 生成したCSVデータをダウンロード
+      const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+      const blob = new Blob([bom, csv], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = this.gridName + '.csv';
+      link.click();
+
+      console.log("downloadCSV end. " + this.gridName)
+
+    } catch (e: any) {
+      alert('download csv failed.\n' + e.message);
+    } finally {
+      // stop spinner
+      this.spinner.close();
+    }
   }
 }

@@ -1,8 +1,11 @@
 .space-between-area {
   width: 100%;
-  padding: 5px;
+  padding: 3px;
   display: flex;
   justify-content: space-between;
+  button {
+    margin: 3px;
+  }
 }
 
 .grid-area {
