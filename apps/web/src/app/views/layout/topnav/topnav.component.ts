@@ -94,7 +94,7 @@ export class TopnavComponent implements OnInit {
     async getUsers(dialog: TableDialogComponent) {
         // 検索のクエリを実行
         // const values = JSON.stringify([dialog.searchText]);
-        const values = JSON.stringify(['']);
+        const values = JSON.stringify([null, null, null, null, null, null, null, null, null]);
         const ret: any = await this.http.get('api/query?sql=Users/getUsers.sql&values=' + values);
         if (ret.message !== null) {
             alert('Get users failed.\n' + ret.message);
@@ -124,7 +124,7 @@ export class TopnavComponent implements OnInit {
 
         // ユーザ登録用のダイアログ表示
         const dialog2 = this.simpleDialog.open('600px');
-        dialog2.title = 'user.registerUser';
+        dialog2.title = 'user.register';
         dialog2.message = '';
         dialog2.items = [
             { label: 'user.code', value: data?.code, inputtype: data ? InputType.Display : InputType.Text, required: true, placeholder: '' },
@@ -156,7 +156,7 @@ export class TopnavComponent implements OnInit {
 
         // 確認ダイアログの表示
         const result = await this.simpleDialog.confirm(
-            'user.registerUser',
+            'user.register',
             'user.registerConfirm',
         );
         if (result !== 'ok') { return; }

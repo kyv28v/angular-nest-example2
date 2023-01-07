@@ -1,46 +1,32 @@
 <div class="form-group">
   <div class="form-row">
-    名前
-    <div class="col-auto">
-      <input type="text" class="form-control" [(ngModel)]="searchText">
-    </div>
-    <div class="col-auto">
-      <button class="btn btn-primary" (click)="searchUser()">{{ 'Search' | translate }}</button>
+    <div class="space-between-area">
+      <app-search-condition></app-search-condition>
+      <div>
+        <button mat-raised-button color="primary" (click)="regUser(null)" *ngIf="user.authCheck(11)">{{ 'user.register' | translate }}</button>
+        <button mat-icon-button [matMenuTriggerFor]="gridMenu">
+          <mat-icon>list_alt</mat-icon>
+        </button>
+        <mat-menu #gridMenu="matMenu">
+          <button mat-menu-item (click)="simpleGrid.downloadCSV()">
+            <mat-icon>download</mat-icon>
+            <span>{{ 'downloadCsv' | translate }}</span>
+          </button>
+          <button mat-menu-item (click)="simpleGrid.clearSetting()">
+            <mat-icon>clear</mat-icon>
+            <span>{{ 'clearGridSetting' | translate }}</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
   </div>
-  <hr>
-  
-  <button class="btn btn-primary" (click)="regUser(null)" *ngIf="user.authCheck(11)">{{ 'Add' | translate }}</button>
-  <hr>
+</div>
 
-  <div class="table-responsive">
-  <table class="table table-bordered">
-    <thead class="thead-light">
-      <tr>
-        <th>{{ 'user.id' | translate }}</th>
-        <th>{{ 'user.code' | translate }}</th>
-        <th>{{ 'user.name' | translate }}</th>
-        <th>{{ 'user.age' | translate }}</th>
-        <th>{{ 'user.sex' | translate }}</th>
-        <th>{{ 'user.birthday' | translate }}</th>
-        <th>{{ 'user.note' | translate }}</th>
-        <th *ngIf="user.authCheck(12)"></th>
-        <th *ngIf="user.authCheck(13)"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let data of users">
-        <td>{{ data.id }}</td>
-        <td>{{ data.code }}</td>
-        <td>{{ data.name }}</td>
-        <td>{{ data.age }}</td>
-        <td>{{ data.sex | enumChange: enums.Sex }}</td>
-        <td>{{ data.birthday | date:"yyyy/MM/dd" }}</td>
-        <td>{{ data.note }}</td>
-        <td *ngIf="user.authCheck(12)"><mat-icon color="primary"(click)="regUser(data)">edit</mat-icon></td>
-        <td *ngIf="user.authCheck(13)"><mat-icon color="warn" (click)="delUser(data)">delete_forever</mat-icon></td>
-      </tr>
-    </tbody>
-  </table>
-  </div>
+<div class="grid-area">
+  <app-simple-grid
+    [gridName]="'userMng'"
+    [columnDefine]="columnDefine"
+    [dataSource]="dataSource"
+  >
+  </app-simple-grid>
 </div>

@@ -60,7 +60,7 @@
         "password": "パスワード",
         "note": "備考",
         "auth": "権限",
-        "registerUser": "ユーザ登録",
+        "register": "ユーザ登録",
         "registerConfirm": "ユーザを登録します。よろしいですか？",
         "deleteUser": "ユーザ削除",
         "deleteConfirm": "ユーザを削除します。よろしいですか？",

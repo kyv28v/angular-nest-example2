@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 
-import { TranslateService } from '@ngx-translate/core';
-
 import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { SearchConditionComponent } from '../../components/searchCondition/searchCondition.component';
-import { SimpleGridComponent } from '../../components/simpleGrid/simpleGrid.component';
+import { SimpleGridComponent, ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { ProgressSpinnerService } from '../../components/progressSpinner/progressSpinner.service';
-import { ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { Enums } from '../../../common/defines/enums';
 
 
@@ -39,19 +36,17 @@ export class RoomAccessMngComponent implements OnInit {
     private http: HttpRequestInterceptor,
     private spinner: ProgressSpinnerService,
     private simpleDialog: SimpleDialogComponent,
-    public translate: TranslateService,
     public user: UserService,
   ) { }
 
   // 画面初期表示
   async ngOnInit() {
     // ユーザ一覧の取得
-    const users: any = await this.http.get('api/query?sql=Users/getUsers.sql&values=' + JSON.stringify(['']));
+    const users: any = await this.http.get('api/query?sql=Users/getUsers.sql&values=' + JSON.stringify([null, null, null, null, null, null, null, null, null]));
     const userList: any[] = users.rows as any[];
     this.userList = userList.map(({id, name}) => ({id, name}));
 
     // 一覧のカラム定義をセット
-    // ※ userList のようにDBデータを Enum として使用する場合はOnInitで定義する。そうでない場合は変数宣言時に定義してもよい。
     this.columnDefine = [
       { type: 'number',   column: 'id',           name: 'roomAccessMng.id',             format: '0.0-0'               },
       { type: 'enum',     column: 'room_cd',      name: 'roomAccessMng.room',           enum: Enums.Rooms             },
@@ -195,7 +190,7 @@ export class RoomAccessMngComponent implements OnInit {
   async delRoomAccessMng(data: any) {
     // 確認ダイアログの表示
     const result = await this.simpleDialog.confirm(
-      'Confirm',
+      'confirm',
       'roomAccessMng.deleteConfirmMessage');
     if (result !== 'ok') { return; }
 
