@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 
@@ -9,22 +9,29 @@ import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/
   templateUrl: './searchCondition.component.html',
   styleUrls: ['./searchCondition.component.scss'],
 })
-export class SearchConditionComponent {
-  public searchConditionName: string;
-  public title: string;
-  public items: any[] = [];
+export class SearchConditionComponent implements OnInit {
+  @Input() searchConditionName: string;
+  @Input() items: any[] = [];
+  @Input() method: any;
+  @Input() defaultValues: any;
+
+  public title: string = 'search';
   public values: any[] = [];
-  public method: any;
-
   public searchConditionString: string;
-
-  private defaultSearchCondition: any[];
 
   // constructor
   constructor(
     private simpleDialog: SimpleDialogComponent,
     private translate: TranslateService,
   ) { }
+
+  async ngOnInit() {
+    // // itemsからデフォルトのitems配列を生成
+    // this.createDefaultItems();
+    
+    // ローカルストレージの検索条件を復元
+    this.restoreSetting();
+  }
 
   // 検索ダイアログの表示
   async openSearchDialog() {
@@ -77,23 +84,33 @@ export class SearchConditionComponent {
     this.searchConditionString = str;
   }
 
-  // ローカルストレージの検索条件を復元（なければ引数をセットする）
-  init(defaultSearchCondition: any[]) {
-    this.defaultSearchCondition = defaultSearchCondition;
+  // // itemsからデフォルトのitems配列を生成
+  // createDefaultItems() {
+  //   this.defaultValues = []; 
+  //   for (let i = 0; i < this.items.length; i++) {
+  //     if (this.items[i].inputtype.substr(-5) == 'Range') {    // 範囲入力の場合は配列をセット
+  //       this.defaultValues.push([null, null]);
+  //     } else {
+  //       this.defaultValues.push(null);
+  //     }
+  //   }
+  // }
 
+  // ローカルストレージの検索条件を復元
+  restoreSetting() {
     var searchConditionStr = localStorage.getItem('searchCondition.' + this.searchConditionName);
     if (searchConditionStr) {
       this.values = JSON.parse(searchConditionStr);
       console.log('restore search condition. ');
     } else {
-      this.values = defaultSearchCondition;
+      this.values = this.defaultValues;
     }
   }
 
   // 検索条件のクリア
   clear() {
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].value = this.defaultSearchCondition[i];
+      this.items[i].value = this.defaultValues[i];
     }
   }
 }

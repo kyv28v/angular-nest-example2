@@ -1,7 +1,12 @@
 <div class="form-group">
   <div class="form-row">
     <div class="space-between-area">
-      <app-search-condition></app-search-condition>
+      <app-search-condition
+        [searchConditionName]="'userMng'"
+        [items]="searchItems"
+        [method]="searchMethod"
+        [defaultValues]="defaultSearchValues"
+      ></app-search-condition>
       <div>
         <button mat-raised-button color="primary" (click)="regUser(null)" *ngIf="user.authCheck(11)">{{ 'user.register' | translate }}</button>
         <button mat-icon-button [matMenuTriggerFor]="gridMenu">

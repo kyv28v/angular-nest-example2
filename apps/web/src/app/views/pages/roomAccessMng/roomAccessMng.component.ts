@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 
 import { HttpRequestInterceptor } from '../../../common/services/http';
@@ -16,21 +16,30 @@ import { Enums } from '../../../common/defines/enums';
   styleUrls: ['./roomAccessMng.component.scss'],
   providers: [ HttpRequestInterceptor ],
 })
-export class RoomAccessMngComponent implements OnInit {
+export class RoomAccessMngComponent implements OnInit, AfterViewInit {
 
   public enums = Enums;
   public userList: any[] = [];
 
+  // ------------------------------------------------------------
   // 一覧定義
+  // ------------------------------------------------------------
   dataSource: MatTableDataSource<any>;
   columnDefine: ColumnDefine[];
 
   @ViewChild(SimpleGridComponent)
   public simpleGrid: SimpleGridComponent;
 
-  // 検索条件
+  // ------------------------------------------------------------
+  // 検索条件定義
+  // ------------------------------------------------------------
+  searchItems: any[];
+  searchMethod = async () => await this.searchRoomAccessMng();
+  defaultSearchValues = [[null, null], null, null, [null, null], [null, null]];
+
   @ViewChild(SearchConditionComponent)
   public searchCondition: SearchConditionComponent;
+  // ------------------------------------------------------------
 
   constructor(
     private http: HttpRequestInterceptor,
@@ -60,18 +69,17 @@ export class RoomAccessMngComponent implements OnInit {
     ];
 
     // 検索条件をセット
-    this.searchCondition.searchConditionName = 'roomAccessMng';
-    this.searchCondition.title = 'search';
-    this.searchCondition.init([[null, null], null, null, [null, null], [null, null]]);
-    this.searchCondition.items = [
-      { label: 'roomAccessMng.id',            value: this.searchCondition.values[0], inputtype: InputType.NumberRange,    },
-      { label: 'roomAccessMng.room',          value: this.searchCondition.values[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
-      { label: 'roomAccessMng.user',          value: this.searchCondition.values[2], inputtype: InputType.Select2,  selectList : this.userList },
-      { label: 'roomAccessMng.entryDateTime', value: this.searchCondition.values[3], inputtype: InputType.DateTimeRange,  },
-      { label: 'roomAccessMng.exitDateTime',  value: this.searchCondition.values[4], inputtype: InputType.DateTimeRange,  },
+    this.searchItems = [
+      { label: 'roomAccessMng.id',            value: null, inputtype: InputType.NumberRange,    },
+      { label: 'roomAccessMng.room',          value: null, inputtype: InputType.Select2,  selectList : Enums.Rooms },
+      { label: 'roomAccessMng.user',          value: null, inputtype: InputType.Select2,  selectList : this.userList },
+      { label: 'roomAccessMng.entryDateTime', value: null, inputtype: InputType.DateTimeRange,  },
+      { label: 'roomAccessMng.exitDateTime',  value: null, inputtype: InputType.DateTimeRange,  },
     ];
-    this.searchCondition.method = async () => await this.searchRoomAccessMng();
+  }
 
+  // 検索条件などの子コンポーネントの描画が完了した後、検索を実行する
+  async ngAfterViewInit() {
     // 検索
     await this.searchRoomAccessMng();
   }

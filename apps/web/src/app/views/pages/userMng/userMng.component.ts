@@ -17,23 +17,50 @@ import { Enums } from '../../../common/defines/enums';
   styleUrls: ['./userMng.component.scss'],
   providers: [ HttpRequestInterceptor ],
 })
-export class UserMngComponent implements AfterViewInit {
+export class UserMngComponent implements OnInit, AfterViewInit {
 
   public enums = Enums;
   public users: any;
   public searchText = '';
 
+  // ------------------------------------------------------------
   // 一覧定義
+  // ------------------------------------------------------------
   dataSource: MatTableDataSource<any>;
-  columnDefine: ColumnDefine[];
+  columnDefine: ColumnDefine[] = [
+    { type: 'number',   column: 'id',           name: 'user.id',        format: '0.0-0'       },
+    { type: 'string',   column: 'code',         name: 'user.code',                            },
+    { type: 'string',   column: 'name',         name: 'user.name',                            },
+    { type: 'number',   column: 'age',          name: 'user.age',       format: '0.0-0'       },
+    { type: 'enum',     column: 'sex',          name: 'user.sex',       enum: Enums.Sex       },
+    { type: 'datetime', column: 'birthday',     name: 'user.birthday',  format: 'yyyy/MM/dd'  },
+    { type: 'string',   column: 'note',         name: 'note',                                 },
+    { type: 'button',   column: '__edit',       name: 'edit',           icon: 'edit',           method: async (data: any) => await this.regUser(data), color: 'primary', auth: 22  },
+    { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delUser(data), color: 'warn',    auth: 23  },
+  ];
 
   @ViewChild(SimpleGridComponent)
   public simpleGrid: SimpleGridComponent;
 
-  // 検索条件
+  // ------------------------------------------------------------
+  // 検索条件定義
+  // ------------------------------------------------------------
+  searchItems: any[] = [
+    { label: 'user.id',         value: null, inputtype: InputType.NumberRange,    },
+    { label: 'user.code',       value: null, inputtype: InputType.Text,           },
+    { label: 'user.name',       value: null, inputtype: InputType.Text,           },
+    { label: 'user.age',        value: null, inputtype: InputType.NumberRange,    },
+    { label: 'user.sex',        value: null, inputtype: InputType.Select2,  selectList : Enums.Sex  },
+    { label: 'user.birthday',   value: null, inputtype: InputType.DateTimeRange,  },
+  ];
+  searchMethod = async () => await this.searchUser();
+  defaultSearchValues = [[null, null], null, null, [null, null], null, [null, null]];
+
   @ViewChild(SearchConditionComponent)
   public searchCondition: SearchConditionComponent;
+  // ------------------------------------------------------------
 
+  // コンストラクタ
   constructor(
     private http: HttpRequestInterceptor,
     private spinner: ProgressSpinnerService,
@@ -42,34 +69,12 @@ export class UserMngComponent implements AfterViewInit {
   ) { }
 
   // 画面初期表示
+  async ngOnInit() {
+    // 処理なし
+  }
+
+  // 検索条件などの子コンポーネントの描画が完了した後、検索を実行する
   async ngAfterViewInit() {
-    // 一覧のカラム定義をセット
-    this.columnDefine = [
-      { type: 'number',   column: 'id',           name: 'user.id',        format: '0.0-0'       },
-      { type: 'string',   column: 'code',         name: 'user.code',                            },
-      { type: 'string',   column: 'name',         name: 'user.name',                            },
-      { type: 'number',   column: 'age',          name: 'user.age',       format: '0.0-0'       },
-      { type: 'enum',     column: 'sex',          name: 'user.sex',       enum: Enums.Sex       },
-      { type: 'datetime', column: 'birthday',     name: 'user.birthday',  format: 'yyyy/MM/dd'  },
-      { type: 'string',   column: 'note',         name: 'note',                                 },
-      { type: 'button',   column: '__edit',       name: 'edit',           icon: 'edit',           method: async (data: any) => await this.regUser(data), color: 'primary', auth: 22  },
-      { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delUser(data), color: 'warn',    auth: 23  },
-    ];
-
-    // 検索条件をセット
-    this.searchCondition.searchConditionName = 'userMng';
-    this.searchCondition.title = 'search';
-    this.searchCondition.init([[null, null], null, null, [null, null], null, [null, null]]);
-    this.searchCondition.items = [
-      { label: 'user.id',         value: this.searchCondition.values[0], inputtype: InputType.NumberRange,    },
-      { label: 'user.code',       value: this.searchCondition.values[1], inputtype: InputType.Text,           },
-      { label: 'user.name',       value: this.searchCondition.values[2], inputtype: InputType.Text,           },
-      { label: 'user.age',        value: this.searchCondition.values[3], inputtype: InputType.NumberRange,    },
-      { label: 'user.sex',        value: this.searchCondition.values[4], inputtype: InputType.Select2,  selectList : Enums.Sex  },
-      { label: 'user.birthday',   value: this.searchCondition.values[5], inputtype: InputType.DateTimeRange,  },
-    ];
-    this.searchCondition.method = async () => await this.searchUser();
-
     // 検索
     await this.searchUser();
   }
