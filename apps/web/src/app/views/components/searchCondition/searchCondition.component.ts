@@ -32,6 +32,9 @@ export class SearchConditionComponent {
     dialog.title = this.title;
     dialog.message = '';
     dialog.items = this.items;
+    for (let i = 0; i < dialog.items.length; i++) {       // キャンセルして開きなおしたときのために、valuesをitemsに戻す
+      dialog.items[i].value = this.values[i]?.concat();   // 単に代入すると範囲のとき（[0]、[1]があるとき）参照渡しになってしまうため、concatで値渡しにする。
+    }
     dialog.buttons = [
       { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
       { class: 'btn-left',                    name: 'clear',  click: async () => { this.clear(); } },
@@ -89,9 +92,8 @@ export class SearchConditionComponent {
 
   // 検索条件のクリア
   clear() {
-    this.values = this.defaultSearchCondition;
     for (let i = 0; i < this.items.length; i++) {
-      this.items[i].value = this.values[i];
+      this.items[i].value = this.defaultSearchCondition[i];
     }
   }
 }
