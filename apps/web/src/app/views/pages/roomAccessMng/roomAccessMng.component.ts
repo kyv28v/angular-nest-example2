@@ -65,8 +65,9 @@ export class RoomAccessMngComponent implements OnInit {
     ];
 
     // 検索条件をセット
+    this.searchCondition.searchConditionName = 'roomAccessMng';
     this.searchCondition.title = 'search';
-    this.searchCondition.values = [[null, null], null, null, [null, null], [null, null]];
+    this.searchCondition.initSearchCondition([[null, null], null, null, [null, null], [null, null]]);
     this.searchCondition.items = [
       { label: 'roomAccessMng.id',            value: this.searchCondition.values[0], inputtype: InputType.NumberRange,    },
       { label: 'roomAccessMng.room',          value: this.searchCondition.values[1], inputtype: InputType.Select2,  selectList : Enums.Rooms },
@@ -106,6 +107,9 @@ export class RoomAccessMngComponent implements OnInit {
       }
 
       this.dataSource = new MatTableDataSource(ret.rows);
+
+      // 検索条件を画面に表示
+      this.searchCondition.dispSearchCondition();
 
     } catch (e: any) {
       console.log(e.message);

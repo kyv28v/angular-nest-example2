@@ -10,6 +10,7 @@ import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/
   styleUrls: ['./searchCondition.component.scss'],
 })
 export class SearchConditionComponent {
+  public searchConditionName: string;
   public title: string;
   public items: any[] = [];
   public values: any[] = [];
@@ -41,7 +42,9 @@ export class SearchConditionComponent {
     // OKなら条件を保持して検索実行
     this.values = dialog.items.map((t) => t.value);
     await this.method();
-    this.dispSearchCondition();
+
+    // 検索条件をローカルストレージに保存
+    localStorage.setItem('searchCondition.' + this.searchConditionName, JSON.stringify(this.values));
   }
 
   // 検索条件を画面に表示
@@ -66,5 +69,14 @@ export class SearchConditionComponent {
     }
 
     this.searchConditionString = str;
-  }  
+  }
+
+  // ローカルストレージの検索条件を復元（なければ引数をセットする）
+  initSearchCondition(defaultSearchCondition: any[]) {
+    var searchConditionStr = localStorage.getItem('searchCondition.' + this.searchConditionName);
+    if (searchConditionStr) {
+      this.values = JSON.parse(searchConditionStr);
+      console.log('restore search condition. ');
+    }
+  }
 }

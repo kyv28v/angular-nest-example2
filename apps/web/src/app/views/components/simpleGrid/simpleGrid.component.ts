@@ -53,7 +53,7 @@ export class SimpleGridComponent implements OnChanges {
       var self = this;
       setTimeout(function() {
         // ローカルストレージの列幅を復元
-        var colWidthStr = localStorage.getItem('tableCoWidth_' + self.gridName);
+        var colWidthStr = localStorage.getItem('tableCoWidth.' + self.gridName);
         if (colWidthStr) {
           var colWidth = JSON.parse(colWidthStr);
           for (let i = 0; i < self.columnDefine.length; i++) {
@@ -66,7 +66,7 @@ export class SimpleGridComponent implements OnChanges {
         }
 
         // ローカルストレージのソート条件を復元
-        var tableSortStr = localStorage.getItem('tableSort_' + self.gridName);
+        var tableSortStr = localStorage.getItem('tableSort.' + self.gridName);
         if (tableSortStr && self.dataSource.sort) {
           var tableSort = JSON.parse(tableSortStr);
           self.gridSort.active = tableSort.active;
@@ -100,7 +100,7 @@ export class SimpleGridComponent implements OnChanges {
         colWidth.push(document.getElementById('col_' + i)?.offsetWidth);
       }
 
-      localStorage.setItem('tableCoWidth_' + self.gridName, JSON.stringify(colWidth));
+      localStorage.setItem('tableCoWidth.' + self.gridName, JSON.stringify(colWidth));
       console.log('save table column width. ' + colWidth.join(','));
 
       // イベントをクリア
@@ -110,7 +110,7 @@ export class SimpleGridComponent implements OnChanges {
 
   // テーブルのソート条件を変更したとき、ソート条件をローカルストレージに保存する。
   onSortChange(event: any) {
-    localStorage.setItem('tableSort_' + this.gridName, JSON.stringify(event));
+    localStorage.setItem('tableSort.' + this.gridName, JSON.stringify(event));
   }
 
   // CSVダウンロード
