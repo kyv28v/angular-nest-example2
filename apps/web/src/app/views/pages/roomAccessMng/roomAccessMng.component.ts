@@ -54,6 +54,7 @@ export class RoomAccessMngComponent implements OnInit {
     ];
 
     // 検索条件をセット
+    this.searchCondition.title = 'search';
     this.searchCondition.values = [[null, null], null, null, [null, null], [null, null]];
     this.searchCondition.items = [
       { label: 'roomAccessMng.id',            value: this.searchCondition.values[0], inputtype: InputType.NumberRange,    },
