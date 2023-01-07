@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from "@angular/material/table";
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { HttpRequestInterceptor } from '../../../common/services/http';
 import { UserService } from '../../../common/services/user.service';
 import { SimpleDialogComponent, InputType } from '../../components/simpleDialog/simpleDialog.component';
 import { SearchConditionComponent } from '../../components/searchCondition/searchCondition.component';
+import { ProgressSpinnerService } from '../../components/progressSpinner/progressSpinner.service';
 import { ColumnDefine } from '../../components/simpleGrid/simpleGrid.component';
 import { Enums } from '../../../common/defines/enums';
 
@@ -27,7 +30,9 @@ export class RoomAccessMngComponent implements OnInit {
 
   constructor(
     private http: HttpRequestInterceptor,
+    private spinner: ProgressSpinnerService,
     private simpleDialog: SimpleDialogComponent,
+    public translate: TranslateService,
     public searchCondition: SearchConditionComponent,
     public user: UserService,
   ) { }
@@ -71,25 +76,37 @@ export class RoomAccessMngComponent implements OnInit {
 
   // 検索
   async searchRoomAccessMng() {
-    // 検索のクエリを実行
-    const values = JSON.stringify([
-      this.searchCondition.values[0][0],
-      this.searchCondition.values[0][1],
-      this.searchCondition.values[1],
-      this.searchCondition.values[2],
-      this.searchCondition.values[3][0],
-      this.searchCondition.values[3][1],
-      this.searchCondition.values[4][0],
-      this.searchCondition.values[4][1],
-    ]);
+    try{
+      // show spinner
+      this.spinner.show();
+      this.spinner.setMessage(this.translate.instant('Searching'));
 
-    const ret: any = await this.http.get('api/query?sql=RoomAccessMng/getRoomAccessMngs.sql&values=' + values);
-    if (ret.message !== null) {
-      alert('Get room access datetime failed.\n' + ret.message);
-      return;
+      // 検索のクエリを実行
+      const values = JSON.stringify([
+        this.searchCondition.values[0][0],
+        this.searchCondition.values[0][1],
+        this.searchCondition.values[1],
+        this.searchCondition.values[2],
+        this.searchCondition.values[3][0],
+        this.searchCondition.values[3][1],
+        this.searchCondition.values[4][0],
+        this.searchCondition.values[4][1],
+      ]);
+
+      const ret: any = await this.http.get('api/query?sql=RoomAccessMng/getRoomAccessMngs.sql&values=' + values);
+      if (ret.message !== null) {
+        alert('Get room access datetime failed.\n' + ret.message);
+        return;
+      }
+
+      this.dataSource = new MatTableDataSource(ret.rows);
+
+    } catch (e: any) {
+      console.log(e.message);
+    } finally {
+      // stop spinner
+      this.spinner.close();
     }
-
-    this.dataSource = new MatTableDataSource(ret.rows);
   }
 
   // 追加/更新
@@ -129,27 +146,39 @@ export class RoomAccessMngComponent implements OnInit {
       'roomAccessMng.registerConfirmMessage');
     if (result !== 'ok') { return; }
 
-    // APIの呼び出し
-    const room_cd = dialog.items[0].value;
-    const user_id = dialog.items[1].value;
-    const entry_dt = dialog.items[2].value;
-    const exit_dt = dialog.items[3].value;
-    const note = dialog.items[4].value;
+    try{
+      // show spinner
+      this.spinner.show();
+      this.spinner.setMessage(this.translate.instant('Registering'));
 
-    // 追加/更新のクエリを実行
-    let body;
-    if (data) {
-      body = { sql: 'RoomAccessMng/updRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note, data.id] };
-    } else {
-      body = { sql: 'RoomAccessMng/addRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note] };
-    }
-    const ret: any = await this.http.post('api/query', body);
-    if (ret.message !== null) {
-      alert('Register room access datetime failed.\n' + ret.message);
-      return;
-    }
+      // APIの呼び出し
+      const room_cd = dialog.items[0].value;
+      const user_id = dialog.items[1].value;
+      const entry_dt = dialog.items[2].value;
+      const exit_dt = dialog.items[3].value;
+      const note = dialog.items[4].value;
 
-    dialog.close('ok');
+      // 追加/更新のクエリを実行
+      let body;
+      if (data) {
+        body = { sql: 'RoomAccessMng/updRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note, data.id] };
+      } else {
+        body = { sql: 'RoomAccessMng/addRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note] };
+      }
+      const ret: any = await this.http.post('api/query', body);
+      if (ret.message !== null) {
+        alert('Register room access datetime failed.\n' + ret.message);
+        return;
+      }
+
+      dialog.close('ok');
+
+    } catch (e: any) {
+      console.log(e.message);
+    } finally {
+      // stop spinner
+      this.spinner.close();
+    }
   }
 
   // 削除
@@ -160,12 +189,24 @@ export class RoomAccessMngComponent implements OnInit {
       'roomAccessMng.deleteConfirmMessage');
     if (result !== 'ok') { return; }
 
-    // 削除のクエリを実行
-    const body = { sql: 'RoomAccessMng/delRoomAccessMng.sql', values: [data.id] };
-    const ret: any = await this.http.post('api/query', body);
-    if (ret.message !== null) {
-      alert('Delete room access datetime failed\n' + ret.message);
-      return;
+    try{
+      // show spinner
+      this.spinner.show();
+      this.spinner.setMessage(this.translate.instant('Deleting'));
+
+      // 削除のクエリを実行
+      const body = { sql: 'RoomAccessMng/delRoomAccessMng.sql', values: [data.id] };
+      const ret: any = await this.http.post('api/query', body);
+      if (ret.message !== null) {
+        alert('Delete room access datetime failed\n' + ret.message);
+        return;
+      }
+
+    } catch (e: any) {
+      console.log(e.message);
+    } finally {
+      // stop spinner
+      this.spinner.close();
     }
 
     // 再検索

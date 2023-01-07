@@ -57,6 +57,10 @@
     "leavePage": "このページを離れてもよろしいですか？\n行った変更が保存されない可能性があります。",
     "refreshPage": "最新のデータを表示します。よろしいですか？\n行った変更が保存されない可能性があります。",
     "requiredError": "入力必須です。",
+    "Searching": "検索中...",
+    "Registering": "登録中...",
+    "Updating": "更新中...",
+    "Deleting": "削除中...",
     "login": {
         "login": "ログイン",
         "logout": "ログアウト",
