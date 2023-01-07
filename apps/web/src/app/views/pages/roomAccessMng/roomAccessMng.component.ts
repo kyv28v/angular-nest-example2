@@ -85,7 +85,7 @@ export class RoomAccessMngComponent implements OnInit {
     try{
       // show spinner
       this.spinner.show();
-      this.spinner.setMessage(this.translate.instant('Searching'));
+      this.spinner.setMessage('searching');
 
       // 検索のクエリを実行
       const values = JSON.stringify([
@@ -130,8 +130,8 @@ export class RoomAccessMngComponent implements OnInit {
       { label: 'note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
     ];
     dialog.buttons = [
-      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
-      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { this.regRoomAccessMngExec(data, dialog); } },
+      { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-right', color: 'primary', name: 'ok',     click: async () => { this.regRoomAccessMngExec(data, dialog); } },
     ];
 
     // ダイアログの実行待ち
@@ -155,7 +155,7 @@ export class RoomAccessMngComponent implements OnInit {
     try{
       // show spinner
       this.spinner.show();
-      this.spinner.setMessage(this.translate.instant('Registering'));
+      this.spinner.setMessage('registering');
 
       // APIの呼び出し
       const room_cd = dialog.items[0].value;
@@ -198,7 +198,7 @@ export class RoomAccessMngComponent implements OnInit {
     try{
       // show spinner
       this.spinner.show();
-      this.spinner.setMessage(this.translate.instant('Deleting'));
+      this.spinner.setMessage('deleting');
 
       // 削除のクエリを実行
       const body = { sql: 'RoomAccessMng/delRoomAccessMng.sql', values: [data.id] };

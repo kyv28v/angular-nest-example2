@@ -3,7 +3,7 @@
     <div class="space-between-area">
       <app-search-condition></app-search-condition>
       <div>
-        <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'Add' | translate }}</button>
+        <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'roomAccessMng.register' | translate }}</button>
         <button mat-raised-button color="primary" (click)="simpleGrid.downloadCSV()">{{ 'downloadCsv' | translate }}</button>
       </div>
     </div>

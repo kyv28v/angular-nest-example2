@@ -66,8 +66,8 @@ export class UserMngComponent implements OnInit {
       { label: 'user.auth', value: selectedList, inputtype: InputType.Check, required: false, placeholder: '', selectList : Enums.Auth },
     ];
     dialog.buttons = [
-      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
-      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { this.regUserExec(data, dialog); } },
+      { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-right', color: 'primary', name: 'ok',     click: async () => { this.regUserExec(data, dialog); } },
     ];
 
     // ダイアログの実行待ち

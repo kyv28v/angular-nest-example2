@@ -3,6 +3,8 @@ import { Overlay, OverlayRef } from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 
+import { TranslateService } from '@ngx-translate/core';
+
 import { ProgressSpinnerComponent } from './progressSpinner.component';
 
 @Injectable({
@@ -15,6 +17,7 @@ export class ProgressSpinnerService {
 
   constructor(
     private readonly overlay: Overlay,
+    public translate: TranslateService,
   ) {}
 
   // show progress spinner
@@ -37,6 +40,6 @@ export class ProgressSpinnerService {
   }
 
   public setMessage(message: string): void {
-    this.spinner.instance.message = message;
+    this.spinner.instance.message = this.translate.instant(message);
   }
 }

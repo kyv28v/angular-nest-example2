@@ -30,8 +30,8 @@ export class SearchConditionComponent {
     dialog.message = '';
     dialog.items = this.items;
     dialog.buttons = [
-      { class: 'btn-left',                    name: 'Cancel', click: async () => { dialog.close('cancel'); } },
-      { class: 'btn-right', color: 'primary', name: 'OK',     click: async () => { dialog.close('ok'); } },
+      { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-right', color: 'primary', name: 'ok',     click: async () => { dialog.close('ok'); } },
     ];
 
     // ダイアログの実行待ち

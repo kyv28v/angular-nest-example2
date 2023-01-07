@@ -63,15 +63,15 @@ export namespace Enums {
   ];
   // 性別
   export const Sex = [
-    { id: 1, name: 'Man' },
-    { id: 2, name: 'Woman' },
+    { id: 1, name: 'enums.sex.man' },
+    { id: 2, name: 'enums.sex.woman' },
   ];
   // 部屋
   export const Rooms = [
-    { id: '101', name: 'Controll Room' },
-    { id: '102', name: 'Test Room' },
-    { id: '103', name: 'Experimental Room' },
-    { id: '201', name: 'Work Room' },
-    { id: '301', name: 'Storage Room' },
+    { id: '101', name: 'enums.rooms.controllRoom' },
+    { id: '102', name: 'enums.rooms.testRoom' },
+    { id: '103', name: 'enums.rooms.experimentalRoom' },
+    { id: '201', name: 'enums.rooms.workRoom' },
+    { id: '301', name: 'enums.rooms.storageRoom' },
   ];
 }
