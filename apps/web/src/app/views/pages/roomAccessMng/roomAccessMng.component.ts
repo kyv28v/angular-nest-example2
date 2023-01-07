@@ -31,12 +31,15 @@ export class RoomAccessMngComponent implements OnInit {
   @ViewChild(SimpleGridComponent)
   public simpleGrid: SimpleGridComponent;
 
+  // 検索条件
+  @ViewChild(SearchConditionComponent)
+  public searchCondition: SearchConditionComponent;
+
   constructor(
     private http: HttpRequestInterceptor,
     private spinner: ProgressSpinnerService,
     private simpleDialog: SimpleDialogComponent,
     public translate: TranslateService,
-    public searchCondition: SearchConditionComponent,
     public user: UserService,
   ) { }
 
