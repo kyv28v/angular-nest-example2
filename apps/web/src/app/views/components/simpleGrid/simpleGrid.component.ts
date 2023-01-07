@@ -178,4 +178,11 @@ export class SimpleGridComponent implements OnChanges {
       this.spinner.close();
     }
   }
+
+  // ローカルストレージに保存した一覧の幅とソート条件を初期化する
+  clearSetting() {
+    localStorage.removeItem('tableCoWidth.' + this.gridName);
+    localStorage.removeItem('tableSort.' + this.gridName);
+    window.location.reload();
+  }
 }

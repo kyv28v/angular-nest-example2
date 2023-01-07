@@ -4,7 +4,19 @@
       <app-search-condition></app-search-condition>
       <div>
         <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'roomAccessMng.register' | translate }}</button>
-        <button mat-raised-button color="primary" (click)="simpleGrid.downloadCSV()">{{ 'downloadCsv' | translate }}</button>
+        <button mat-icon-button [matMenuTriggerFor]="gridMenu">
+          <mat-icon>list_alt</mat-icon>
+        </button>
+        <mat-menu #gridMenu="matMenu">
+          <button mat-menu-item (click)="simpleGrid.downloadCSV()">
+            <mat-icon>download</mat-icon>
+            <span>{{ 'downloadCsv' | translate }}</span>
+          </button>
+          <button mat-menu-item (click)="simpleGrid.clearSetting()">
+            <mat-icon>clear</mat-icon>
+            <span>{{ 'clearGridSetting' | translate }}</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
   </div>
