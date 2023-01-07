@@ -18,6 +18,8 @@ export class SearchConditionComponent {
 
   public searchConditionString: string;
 
+  private defaultSearchCondition: any[];
+
   // constructor
   constructor(
     private simpleDialog: SimpleDialogComponent,
@@ -32,6 +34,7 @@ export class SearchConditionComponent {
     dialog.items = this.items;
     dialog.buttons = [
       { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
+      { class: 'btn-left',                    name: 'clear',  click: async () => { this.clear(); } },
       { class: 'btn-right', color: 'primary', name: 'ok',     click: async () => { dialog.close('ok'); } },
     ];
 
@@ -72,11 +75,23 @@ export class SearchConditionComponent {
   }
 
   // ローカルストレージの検索条件を復元（なければ引数をセットする）
-  initSearchCondition(defaultSearchCondition: any[]) {
+  init(defaultSearchCondition: any[]) {
+    this.defaultSearchCondition = defaultSearchCondition;
+
     var searchConditionStr = localStorage.getItem('searchCondition.' + this.searchConditionName);
     if (searchConditionStr) {
       this.values = JSON.parse(searchConditionStr);
       console.log('restore search condition. ');
+    } else {
+      this.values = defaultSearchCondition;
+    }
+  }
+
+  // 検索条件のクリア
+  clear() {
+    this.values = this.defaultSearchCondition;
+    for (let i = 0; i < this.items.length; i++) {
+      this.items[i].value = this.values[i];
     }
   }
 }
