@@ -11,7 +11,7 @@ const fs = require('fs')
 @Controller()
 export class QueryController {
   constructor(
-    private readonly db: DatabaseService,
+    // private readonly db: DatabaseService,
     private readonly auth: AuthService,
   ) {}
 
@@ -96,21 +96,22 @@ export class QueryController {
       // console.log('values:' + JSON.stringify(values));
 
       // DB接続
-      await this.db.connect();
+      var db = new DatabaseService();
+      await db.connect();
 
       // SQL実行
-      if (trans) { await this.db.begin(); }
-      const data = await this.db.query(sql, values);
-      if (trans) { await this.db.commit(); }
+      if (trans) { await db.begin(); }
+      const data = await db.query(sql, values);
+      if (trans) { await db.commit(); }
 
       // console.log('db.query() end');
       // console.log('data:' + JSON.stringify(data.rows));
       return data;
     } catch (e) {
-      if (trans) { await this.db.rollback(); }
+      if (trans) { await db.rollback(); }
       throw e;
     } finally {
-      await this.db.release();
+      await db.release();
     }
   }
 }

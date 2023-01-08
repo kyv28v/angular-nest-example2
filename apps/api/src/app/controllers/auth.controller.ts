@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 export class AuthController {
   constructor(
     private readonly auth: AuthService,
-    private readonly db: DatabaseService,
+    // private readonly db: DatabaseService,
   ) {}
 
   @Post('createToken')
@@ -44,10 +44,11 @@ export class AuthController {
       // console.log('newPassword:' + req.body.newPassword);
 
       // connect db
-      await this.db.connect();
+      var db = new DatabaseService();
+      await db.connect();
 
       // execute query
-      const data = await this.db.query('SELECT * FROM users WHERE id = $1', [ body.userId ]);
+      const data = await db.query('SELECT * FROM users WHERE id = $1', [ body.userId ]);
 
       // Error if user not found
       if (data.rows.length === 0) {
@@ -60,18 +61,18 @@ export class AuthController {
       }
 
       // execute query
-      await this.db.begin();
-      const ret = await this.db.query('UPDATE users SET password = $1 WHERE id = $2', [ body.newPassword, body.userId ]);
-      await this.db.commit();
+      await db.begin();
+      const ret = await db.query('UPDATE users SET password = $1 WHERE id = $2', [ body.newPassword, body.userId ]);
+      await db.commit();
 
       console.log('changePassword() end');
       return { message: null };
     } catch (e) {
       console.log(e.stack);
-      await this.db.rollback();
+      await db.rollback();
       return { message: e.message };
     } finally {
-      await this.db.release();
+      await db.release();
     }
   }
 }

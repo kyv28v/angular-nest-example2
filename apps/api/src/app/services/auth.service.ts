@@ -10,7 +10,7 @@ export class AuthService {
   decoded: string;
 
   constructor(
-    private readonly db: DatabaseService,
+    // private readonly db: DatabaseService,
   ) {}
 
   async createToken(
@@ -25,10 +25,11 @@ export class AuthService {
       }
 
       // DB接続
-      await this.db.connect();
+      var db = new DatabaseService();
+      await db.connect();
 
       // SQL実行
-      const data = await this.db.query('SELECT * FROM users WHERE code = $1', [ userCode ]);
+      const data = await db.query('SELECT * FROM users WHERE code = $1', [ userCode ]);
 
       // ユーザが見つからない場合はエラー
       if (data.rows.length === 0) {
@@ -69,7 +70,7 @@ export class AuthService {
       console.error(e.stack);
       return { message: e.message };
     } finally {
-      await this.db.release();
+      await db.release();
     }
   }
 
