@@ -68,12 +68,14 @@ export class UserMngComponent implements OnInit, AfterViewInit {
     public user: UserService,
   ) { }
 
-  // 画面初期表示
+  // 初期化完了イベント
+  // ※ @Input()でバインドされた入力値を初期化後に呼び出される。
   async ngOnInit() {
     // 処理なし
   }
 
-  // 検索条件などの子コンポーネントの描画が完了した後、検索を実行する
+  // ビュー初期化完了イベント
+  // ※ 検索条件などの子コンポーネントの描画が完了した後に呼び出される。
   async ngAfterViewInit() {
     // 検索
     await this.searchUser();

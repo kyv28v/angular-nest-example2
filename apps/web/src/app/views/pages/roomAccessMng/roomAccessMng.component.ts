@@ -25,7 +25,17 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
   // 一覧定義
   // ------------------------------------------------------------
   dataSource: MatTableDataSource<any>;
-  columnDefine: ColumnDefine[];
+  columnDefine: ColumnDefine[] = [
+    { type: 'number',   column: 'id',           name: 'roomAccessMng.id',             format: '0.0-0'               },
+    { type: 'enum',     column: 'room_cd',      name: 'roomAccessMng.room',           enum: Enums.Rooms             },
+    { type: 'enum',     column: 'user_id',      name: 'roomAccessMng.user',           enum: this.userList           },
+    { type: 'datetime', column: 'entry_dt',     name: 'roomAccessMng.entryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
+    { type: 'datetime', column: 'exit_dt',      name: 'roomAccessMng.exitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
+    { type: 'number',   column: 'access_time',  name: 'roomAccessMng.accessTime',     format: '1.2-2'               },
+    { type: 'string',   column: 'note',         name: 'note',                                                       },
+    { type: 'button',   column: '__edit',       name: 'edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
+    { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
+  ];
 
   @ViewChild(SimpleGridComponent)
   public simpleGrid: SimpleGridComponent;
@@ -33,7 +43,13 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
   // ------------------------------------------------------------
   // 検索条件定義
   // ------------------------------------------------------------
-  searchItems: any[];
+  searchItems: any[] = [
+    { label: 'roomAccessMng.id',            value: null, inputtype: InputType.NumberRange,    },
+    { label: 'roomAccessMng.room',          value: null, inputtype: InputType.Select2,  selectList : Enums.Rooms },
+    { label: 'roomAccessMng.user',          value: null, inputtype: InputType.Select2,  selectList : this.userList },
+    { label: 'roomAccessMng.entryDateTime', value: null, inputtype: InputType.DateTimeRange,  },
+    { label: 'roomAccessMng.exitDateTime',  value: null, inputtype: InputType.DateTimeRange,  },
+  ];
   searchMethod = async () => await this.searchRoomAccessMng();
   defaultSearchValues = [[null, null], null, null, [null, null], [null, null]];
 
@@ -48,37 +64,21 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
     public user: UserService,
   ) { }
 
-  // 画面初期表示
+  // 初期化完了イベント
+  // ※ @Input()でバインドされた入力値を初期化後に呼び出される。
   async ngOnInit() {
     // ユーザ一覧の取得
     const users: any = await this.http.get('api/query?sql=Users/getUsers.sql&values=' + JSON.stringify([null, null, null, null, null, null, null, null, null]));
     const userList: any[] = users.rows as any[];
     this.userList = userList.map(({id, name}) => ({id, name}));
 
-    // 一覧のカラム定義をセット
-    this.columnDefine = [
-      { type: 'number',   column: 'id',           name: 'roomAccessMng.id',             format: '0.0-0'               },
-      { type: 'enum',     column: 'room_cd',      name: 'roomAccessMng.room',           enum: Enums.Rooms             },
-      { type: 'enum',     column: 'user_id',      name: 'roomAccessMng.user',           enum: this.userList           },
-      { type: 'datetime', column: 'entry_dt',     name: 'roomAccessMng.entryDateTime',  format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'datetime', column: 'exit_dt',      name: 'roomAccessMng.exitDateTime',   format: 'yyyy/MM/dd HH:mm'    },
-      { type: 'number',   column: 'access_time',  name: 'roomAccessMng.accessTime',     format: '1.2-2'               },
-      { type: 'string',   column: 'note',         name: 'note',                                                       },
-      { type: 'button',   column: '__edit',       name: 'edit',           icon: 'edit',           method: async (data: any) => await this.regRoomAccessMng(data), color: 'primary', auth: 22  },
-      { type: 'button',   column: '__delete',     name: 'delete',         icon: 'delete_forever', method: async (data: any) => await this.delRoomAccessMng(data), color: 'warn',    auth: 23  },
-    ];
-
-    // 検索条件をセット
-    this.searchItems = [
-      { label: 'roomAccessMng.id',            value: null, inputtype: InputType.NumberRange,    },
-      { label: 'roomAccessMng.room',          value: null, inputtype: InputType.Select2,  selectList : Enums.Rooms },
-      { label: 'roomAccessMng.user',          value: null, inputtype: InputType.Select2,  selectList : this.userList },
-      { label: 'roomAccessMng.entryDateTime', value: null, inputtype: InputType.DateTimeRange,  },
-      { label: 'roomAccessMng.exitDateTime',  value: null, inputtype: InputType.DateTimeRange,  },
-    ];
+    // 一覧、検索条件で使用するユーザ一覧にセットする
+    this.columnDefine[2].enum = this.userList;
+    this.searchItems[2].selectList = this.userList;
   }
 
-  // 検索条件などの子コンポーネントの描画が完了した後、検索を実行する
+  // ビュー初期化完了イベント
+  // ※ 検索条件などの子コンポーネントの描画が完了した後に呼び出される。
   async ngAfterViewInit() {
     // 検索
     await this.searchRoomAccessMng();
