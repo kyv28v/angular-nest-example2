@@ -51,7 +51,6 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
     { label: 'roomAccessMng.exitDateTime',  value: null, inputtype: InputType.DateTimeRange,  },
   ];
   searchMethod = async () => await this.searchRoomAccessMng();
-  defaultSearchValues = [[null, null], null, null, [null, null], [null, null]];
 
   @ViewChild(SearchConditionComponent)
   public searchCondition: SearchConditionComponent;
@@ -72,7 +71,7 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
     const userList: any[] = users.rows as any[];
     this.userList = userList.map(({id, name}) => ({id, name}));
 
-    // 一覧、検索条件で使用するユーザ一覧にセットする
+    // 一覧、検索条件で使用するユーザ一覧に再セットする
     this.columnDefine[2].enum = this.userList;
     this.searchItems[2].selectList = this.userList;
   }

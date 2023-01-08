@@ -13,11 +13,11 @@ export class SearchConditionComponent implements OnInit {
   @Input() searchConditionName: string;
   @Input() items: any[] = [];
   @Input() method: any;
-  @Input() defaultValues: any;
 
   public title: string = 'search';
   public values: any[] = [];
   public searchConditionString: string;
+  private defaultValues: any[];
 
   // constructor
   constructor(
@@ -26,8 +26,8 @@ export class SearchConditionComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
-    // // itemsからデフォルトのitems配列を生成
-    // this.createDefaultItems();
+    // itemsからデフォルトのvalues配列を生成
+    this.createDefaultValues();
     
     // ローカルストレージの検索条件を復元
     this.restoreSetting();
@@ -85,17 +85,17 @@ export class SearchConditionComponent implements OnInit {
     this.searchConditionString = str;
   }
 
-  // // itemsからデフォルトのitems配列を生成
-  // createDefaultItems() {
-  //   this.defaultValues = []; 
-  //   for (let i = 0; i < this.items.length; i++) {
-  //     if (this.items[i].inputtype.substr(-5) == 'Range') {    // 範囲入力の場合は配列をセット
-  //       this.defaultValues.push([null, null]);
-  //     } else {
-  //       this.defaultValues.push(null);
-  //     }
-  //   }
-  // }
+  // itemsからデフォルトのvalues配列を生成
+  createDefaultValues() {
+    this.defaultValues = []; 
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i].inputtype.substr(-5) == 'Range') {    // 範囲入力の場合は配列をセット
+        this.defaultValues.push([null, null]);
+      } else {
+        this.defaultValues.push(null);
+      }
+    }
+  }
 
   // ローカルストレージの検索条件を復元
   restoreSetting() {

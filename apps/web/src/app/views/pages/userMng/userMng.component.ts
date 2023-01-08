@@ -54,7 +54,6 @@ export class UserMngComponent implements OnInit, AfterViewInit {
     { label: 'user.birthday',   value: null, inputtype: InputType.DateTimeRange,  },
   ];
   searchMethod = async () => await this.searchUser();
-  defaultSearchValues = [[null, null], null, null, [null, null], null, [null, null]];
 
   @ViewChild(SearchConditionComponent)
   public searchCondition: SearchConditionComponent;

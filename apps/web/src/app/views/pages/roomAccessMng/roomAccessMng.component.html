@@ -5,7 +5,6 @@
         [searchConditionName]="'roomAccessMng'"
         [items]="searchItems"
         [method]="searchMethod"
-        [defaultValues]="defaultSearchValues"
       ></app-search-condition>
       <div>
         <button mat-raised-button color="primary" (click)="regRoomAccessMng(null)" *ngIf="user.authCheck(21)">{{ 'roomAccessMng.register' | translate }}</button>
