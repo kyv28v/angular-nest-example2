@@ -1,0 +1,16 @@
+.space-between-area {
+  width: 100%;
+  padding: 3px;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    margin: 3px;
+  }
+}
+
+.search-condition-string {
+  padding-top: 15px;
+  padding-left: 10px;
+  font-size: small;
+}
