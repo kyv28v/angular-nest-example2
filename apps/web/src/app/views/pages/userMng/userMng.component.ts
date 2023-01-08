@@ -51,7 +51,7 @@ export class UserMngComponent implements OnInit, AfterViewInit {
     { label: 'user.name',       value: null, inputtype: InputType.Text,           },
     { label: 'user.age',        value: null, inputtype: InputType.NumberRange,    },
     { label: 'user.sex',        value: null, inputtype: InputType.Select2,  selectList : Enums.Sex  },
-    { label: 'user.birthday',   value: null, inputtype: InputType.DateTimeRange,  },
+    { label: 'user.birthday',   value: null, inputtype: InputType.DateRange,      },
   ];
   searchMethod = async () => await this.searchUser();
 

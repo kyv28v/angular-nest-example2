@@ -82,6 +82,42 @@
                 </button>
             </div>
           </td>
+          <!-- 日付（範囲） -->
+          <td *ngIf="item.inputtype == 'dateRange'" class="space-between-area">
+            <div class="flatpickr-input">
+              <input
+                class="form-control form-wide"
+                type="text"
+                (change)="item.validateMessage = null;"
+                mwlFlatpickr
+                [(ngModel)]="item.value[0]"
+                [dateFormat]="'Y/m/d'"
+                [convertModelValue]="false"
+              >
+            </div>
+            <div class="flatpickr-clear">
+                <button mat-button (click)="item.value[0] = null;">
+                  <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+            <div style="padding: 5px;">～</div>
+            <div class="flatpickr-input">
+              <input
+                class="form-control form-wide"
+                type="text"
+                (change)="item.validateMessage = null;"
+                mwlFlatpickr
+                [(ngModel)]="item.value[1]"
+                [dateFormat]="'Y/m/d'"
+                [convertModelValue]="false"
+              >
+            </div>
+            <div class="flatpickr-clear">
+                <button mat-button (click)="item.value[1] = null;">
+                  <mat-icon>clear</mat-icon>
+                </button>
+            </div>
+          </td>
           <!-- 日時 -->
           <td *ngIf="item.inputtype == 'datetime'">
             <div class="flatpickr-input">

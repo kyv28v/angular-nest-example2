@@ -16,6 +16,7 @@ export namespace InputType {
   export const Password = 'password';
   export const TextArea = 'textarea';
   export const Date = 'date';
+  export const DateRange = 'dateRange';
   export const DateTime = 'datetime';
   export const DateTimeRange = 'datetimeRange';
   export const Time = 'time';
