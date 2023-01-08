@@ -186,7 +186,13 @@ export class UserMngComponent implements OnInit, AfterViewInit {
       }
       const ret: any = await this.http.post('api/query', body);
       if (ret.message !== null) {
-        alert('Register user failed.\n' + ret.message);
+        if (ret.message == 'duplicate key value violates unique constraint "users_pkey"') {
+          // コード重複エラーの時はメッセージを表示
+          // ※ 実際の業務で使用する場合は、バックエンド側で独自のAPIを作ってチェックしたほうがよい。
+          await this.simpleDialog.notify('error', 'user.codeDuplicate');
+        } else {
+          alert('Register user failed.\n' + ret.message);
+        }
         return;
       }
 

@@ -68,7 +68,8 @@
         "changePasswordConfirm": "パスワードを変更します。よろしいですか？",
         "oldPassword": "以前のパスワード",
         "newPassword": "新しいパスワード",
-        "newPassword2": "新しいパスワード(確認)"
+        "newPassword2": "新しいパスワード(確認)",
+        "codeDuplicate": "コードがすでに使用されています。\n別のコードを指定してください。"
     },
     "system": {
         "systemInfo": "システム情報",
