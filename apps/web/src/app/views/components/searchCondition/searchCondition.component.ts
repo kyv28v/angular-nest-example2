@@ -58,6 +58,7 @@ export class SearchConditionComponent implements OnInit {
 
     // 検索条件をローカルストレージに保存
     localStorage.setItem('searchCondition.' + this.searchConditionName, JSON.stringify(this.values));
+    console.log(`save search condition. [${this.searchConditionName}]` + JSON.stringify(this.values));
   }
 
   // 検索条件を画面に表示
@@ -101,7 +102,7 @@ export class SearchConditionComponent implements OnInit {
     var searchConditionStr = localStorage.getItem('searchCondition.' + this.searchConditionName);
     if (searchConditionStr) {
       this.values = JSON.parse(searchConditionStr);
-      console.log('restore search condition. ');
+      console.log(`restore search condition. [${this.searchConditionName}] ` + searchConditionStr);
     } else {
       this.values = this.defaultValues;
     }

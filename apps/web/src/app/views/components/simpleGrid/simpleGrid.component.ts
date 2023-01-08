@@ -62,7 +62,7 @@ export class SimpleGridComponent implements OnChanges {
               element.style.width = colWidth[i] + 'px';
             }
           }
-          console.log('restore table column width. ');
+          console.log(`restore table column width. [${self.gridName}] ` + colWidthStr);
         }
 
         // ローカルストレージのソート条件を復元
@@ -94,14 +94,22 @@ export class SimpleGridComponent implements OnChanges {
       // すでに次のイベントが来ていたら何もせず終了
       if (self.lastEvent && lastEvent.time < self.lastEvent.time) return;
 
-      // テーブルサイズをローカルに保存
+      // 保存フラグ
+      // ※ 初期表示時などに意図せずイベントが走ってしまうことがあるので、HTML要素が見つからない場合はOFFにする
+      let saveFlag = true;
+
+      // HTML要素から列幅を取得
       let colWidth = [];
       for (let i = 0; i < self.columnDefine.length; i++) {
+        if (!document.getElementById('col_' + i)) saveFlag = false;
         colWidth.push(document.getElementById('col_' + i)?.offsetWidth);
       }
 
-      localStorage.setItem('tableCoWidth.' + self.gridName, JSON.stringify(colWidth));
-      console.log('save table column width. ' + colWidth.join(','));
+      // ローカルストレージに保存
+      if (saveFlag) {
+        localStorage.setItem('tableCoWidth.' + self.gridName, JSON.stringify(colWidth));
+        console.log(`save table column width. [${self.gridName}] ` + colWidth.join(','));
+      }
 
       // イベントをクリア
       self.lastEvent = null;
@@ -116,8 +124,6 @@ export class SimpleGridComponent implements OnChanges {
   // CSVダウンロード
   async downloadCSV() {
     try {
-      console.log("downloadCSV start. " + this.gridName)
-
       // show spinner
       this.spinner.show();
       this.spinner.setMessage(this.translate.instant('Downloading'));
@@ -168,8 +174,6 @@ export class SimpleGridComponent implements OnChanges {
       link.href = url;
       link.download = this.gridName + '.csv';
       link.click();
-
-      console.log("downloadCSV end. " + this.gridName)
 
     } catch (e: any) {
       alert('download csv failed.\n' + e.message);
