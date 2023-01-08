@@ -112,8 +112,6 @@ export class UserMngComponent implements OnInit, AfterViewInit {
       // 検索条件を画面に表示
       this.searchCondition.dispSearchCondition();
 
-    } catch (e: any) {
-      console.log(e.message);
     } finally {
       // stop spinner
       this.spinner.close();
@@ -195,8 +193,6 @@ export class UserMngComponent implements OnInit, AfterViewInit {
 
       dialog.close('ok');
 
-    } catch (e: any) {
-      console.log(e.message);
     } finally {
       // stop spinner
       this.spinner.close();
@@ -224,8 +220,6 @@ export class UserMngComponent implements OnInit, AfterViewInit {
         return;
       }
 
-    } catch (e: any) {
-      console.log(e.message);
     } finally {
       // stop spinner
       this.spinner.close();
