@@ -94,7 +94,7 @@
         "user": "ユーザ",
         "entryDateTime": "入室日時",
         "exitDateTime": "退室日時",
-        "accessTime": "滞在時間（分）",
+        "accessTime": "滞在時間（H）",
         "register": "入退室日時登録",
         "registerConfirmMessage": "入退室日時を登録します。よろしいですか？",
         "deleteConfirmMessage": "入退室日時を削除します。よろしいですか？"
