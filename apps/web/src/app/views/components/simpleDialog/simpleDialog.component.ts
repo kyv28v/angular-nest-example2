@@ -147,9 +147,11 @@ export class SimpleDialogComponent {
     if (this.items !== undefined) {
       for (let i = 0; i < this.items.length; i++) {
         this.items[i].validateMessage = '';
-        if (this.items[i].required === true && (!this.items[i].value)) {
-          this.items[i].validateMessage = this.translate.instant('requiredError');
-          ret = false;
+        if (this.items[i].required === true) {
+          if (this.items[i].value === undefined || this.items[i].value === null || this.items[i].value === '') {
+            this.items[i].validateMessage = this.translate.instant('requiredError');
+            ret = false;
+          }
         }
       }
     }
