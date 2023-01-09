@@ -1,4 +1,4 @@
-# Angular + Nest Example
+# Angular + Nest Example2
 
 Angular、NestJSを使用したサンプル画面です。  
 DBはPostgreSQLを使用しています。  
@@ -8,10 +8,10 @@ DBはPostgreSQLを使用しています。
 
 ## 動作確認環境
 
-・node.js　　　　16.12.0  
-・npm　　　　　8.1.0  
+・node.js　　　 16.12.0  
+・npm　　　　　　8.1.0  
 ・PostgreSql　　15.1  
-・ブラウザ　　　　Chrome、Edge
+・ブラウザ　　　 Chrome、Edge
 
 ## DBの準備
 DBは、PostgreSqlを適当にインストールし、テスト用のテーブル、初期ユーザを作成してください。
