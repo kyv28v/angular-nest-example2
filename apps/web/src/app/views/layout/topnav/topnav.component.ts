@@ -51,7 +51,7 @@ export class TopnavComponent implements OnInit {
 
         // ユーザ情報用のダイアログ表示
         const dialog = this.simpleDialog.open();
-        dialog.title = 'Profile';
+        dialog.title = 'topMenu.profile';
         dialog.message = '';
         dialog.items = [
             { label: 'user.id', value: this.user.id, inputtype: InputType.Display },
@@ -237,7 +237,7 @@ export class TopnavComponent implements OnInit {
 
             // check confirm password
             if (dialog.items[1].value !== dialog.items[2].value) {
-                alert("新しいパスワードが一致しません。");
+                this.simpleDialog.notify("error", "user.illegalNewPassword");
                 return;
             }
 
@@ -259,7 +259,7 @@ export class TopnavComponent implements OnInit {
                 newPassword: hashedNewPassword,
             });
             if (ret.message) {
-                alert(ret.message);
+                this.simpleDialog.notify("error", ret.message);
                 return;
             }
     

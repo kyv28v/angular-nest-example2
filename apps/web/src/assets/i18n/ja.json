@@ -69,6 +69,7 @@
         "oldPassword": "以前のパスワード",
         "newPassword": "新しいパスワード",
         "newPassword2": "新しいパスワード(確認)",
+        "illegalNewPassword": "新しいパスワードが一致しません。",
         "codeDuplicate": "コードがすでに使用されています。\n別のコードを指定してください。"
     },
     "system": {

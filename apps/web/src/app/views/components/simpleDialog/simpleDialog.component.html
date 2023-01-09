@@ -201,7 +201,7 @@
             <ng-container *ngFor="let data of item.selectList; index as i">
               <label>
                 <input type="radio" [(ngModel)]="item.value" [value]="data.id" (change)="item.validateMessage = null;"
-                  [checked]="item.value == data.id">{{ data.name | translate }}
+                  [checked]="item.value == data.id"> {{ data.name | translate }}
               </label>&nbsp;
             </ng-container>
           </td>
@@ -210,7 +210,7 @@
             <ng-container *ngFor="let data of item.selectList; index as i">
               <label>
                 <input type="checkbox" [(ngModel)]="item.value[i]" [value]="data.id" (change)="item.validateMessage = null;"
-                  [checked]="item.value == data.id">{{ data.name | translate }}
+                  [checked]="item.value == data.id"> {{ data.name | translate }}
               </label>&nbsp;
             </ng-container>
           </td>
