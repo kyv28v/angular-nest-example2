@@ -152,7 +152,7 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
 
     // 確認ダイアログの表示
     const result = await this.simpleDialog.confirm(
-      'Confirm',
+      'confirm',
       'roomAccessMng.registerConfirmMessage');
     if (result !== 'ok') { return; }
 
