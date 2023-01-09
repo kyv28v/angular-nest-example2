@@ -158,7 +158,7 @@ export class SimpleGridComponent implements OnChanges {
           for(let j = 0; j < table.children[i].children.length; j++){
             if (this.columnDefine[j].type == 'button') continue;
             if (row) row += ',';
-            row += table.children[i].children[j].textContent;
+            row += (table.children[i].children[j].textContent)?.trim();
           }
           csv += row + '\n';
           row = '';
