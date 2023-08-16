@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpInterceptor, HttpRequest, HttpErrorRespons
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 @Injectable()
 export class HttpRequestInterceptor implements HttpInterceptor {
@@ -13,12 +14,12 @@ export class HttpRequestInterceptor implements HttpInterceptor {
     ) { }
 
   async get(url: string) {
-    const request = new HttpRequest('GET', url);
+    const request = new HttpRequest('GET', environment.apiServer + url);
     return await this.callAPI(request);
   }
 
   async post(url: string, body: any) {
-    const request = new HttpRequest('POST', url, body);
+    const request = new HttpRequest('POST', environment.apiServer + url, body);
     return await this.callAPI(request);
   }
 
