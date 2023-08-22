@@ -54,6 +54,14 @@
             <input class="form-control form-wide" type="time" name="item_value" (keyup)="item.validateMessage = null;"
               [(ngModel)]="item.value" placeholder={{item.placeholder}}>
           </td>
+          <!-- time（範囲） -->
+          <td *ngIf="item.inputtype == 'timeRange'" class="space-between-area">
+            <input class="form-control form-wide" type="time" name="item_value" (keyup)="item.validateMessage = null;"
+              [(ngModel)]="item.value[0]" placeholder={{item.placeholder}}>
+            <div style="padding: 5px;">～</div>
+            <input class="form-control form-wide" type="time" name="item_value" (keyup)="item.validateMessage = null;"
+              [(ngModel)]="item.value[1]" placeholder={{item.placeholder}}>
+          </td>
           <!-- テキストエリア -->
           <td *ngIf="item.inputtype == 'textarea'">
             <textarea class="form-control form-wide" rows="3" cols="40" name="item_value" (keyup)="item.validateMessage = null;"

@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, OnInit } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 
 import flatpickr from 'flatpickr';
@@ -20,6 +20,7 @@ export namespace InputType {
   export const DateTime = 'datetime';
   export const DateTimeRange = 'datetimeRange';
   export const Time = 'time';
+  export const TimeRange = 'timeRange';
   export const Select = 'select';
   export const Select2 = 'select2';
   export const Select3 = 'select3';
@@ -61,11 +62,14 @@ export class SimpleDialogComponent {
   }
 
   // open simple dialog
-  public open(maxWidth?: string): SimpleDialogComponent {
+  public open(width?: string): SimpleDialogComponent {
     // open dialog
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true;   // Does not close when the background is clicked.
-    if(maxWidth) { dialogConfig.maxWidth = maxWidth; }
+    if(width) {
+      dialogConfig.maxWidth = width;
+      dialogConfig.minWidth = width;
+    }
     
     const dialogRef = this.dialog.open(SimpleDialogComponent, dialogConfig);
     const dialogComponent = dialogRef.componentInstance as SimpleDialogComponent;
