@@ -1,5 +1,6 @@
 SELECT id, room_cd, user_id, entry_dt, exit_dt, note
-, EXTRACT(EPOCH FROM exit_dt - entry_dt) / 3600 access_time 
+, EXTRACT(EPOCH FROM exit_dt - entry_dt) / 3600 access_time
+, image_file
  FROM room_access_mng
  WHERE (COALESCE($1, '') = '' OR id       >= CAST($1 AS INTEGER))
  AND   (COALESCE($2, '') = '' OR id       <= CAST($2 AS INTEGER))

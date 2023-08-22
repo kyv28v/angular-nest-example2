@@ -247,6 +247,13 @@
               </label>&nbsp;
             </ng-container>
           </td>
+          <!-- イメージファイル -->
+          <td *ngIf="item.inputtype == 'imageFile'">
+            <div class="image-file-area">
+              <input type="file" accept="image/*" (change)="onSelectFiles($event, item)"/>
+              <img [src]="item.value" alt="">
+            </div>
+          </td>
           <!-- バリデーションメッセージの表示 -->
           <div class="tooltip-area" *ngIf="item.validateMessage">
             <p>{{ item.validateMessage | translate }}</p>

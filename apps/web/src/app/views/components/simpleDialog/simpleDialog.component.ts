@@ -27,6 +27,7 @@ export namespace InputType {
   export const Radio = 'radio';
   export const Check = 'check';
   export const Color = 'color';
+  export const ImageFile = 'imageFile';
 }
 
 @Injectable({
@@ -108,7 +109,7 @@ export class SimpleDialogComponent {
   }
 
   // open notify dialog
-  public async notify(title: string, message: string | string[]): Promise<string> {
+  public async notify(title: string, message: string | any[]): Promise<string> {
     // open dialog
     const dialogConfig = new MatDialogConfig()
     dialogConfig.disableClose = true;   // Does not close when the background is clicked.
@@ -188,6 +189,38 @@ export class SimpleDialogComponent {
     console.log(`selectFilterCancel(${item.value})`)
     item.selectListFilter = item.selectList.find((s: any) => s.id == item.value)?.name;
   }
+
+  // #endregion   ---------------------------------------------------------------------------------
+
+  // #region 画像関連   ----------------------------------------------------------------------------
+  // 画像ファイル選択イベント
+  async onSelectFiles(event: any, item: any) {
+    const file = event.target.files[0];
+
+    // ファイルサイズチェック
+    if (item.maxsize) {
+      let sizeMB = file.size / 1024 ** 2;   // MBに変換
+      sizeMB = Math.ceil(sizeMB * 100) / 100; 
+      if (sizeMB > item.maxsize) {
+        alert(`${item.maxsize}MB以下のファイルを選択してください。ファイルサイズ：${sizeMB}MB`);
+        return;
+      }
+    }
+
+    // Base64変換してvalueに格納する
+    item.value = await this.readAsDataURL(file);
+  }
+
+  // 画像ファイルのBase64変換（同期版）
+  async readAsDataURL(file: any) {
+    const reader = new FileReader()
+    return new Promise(resolve => {
+      reader.onload = event => {
+        resolve(event.target?.result)
+      }
+      reader.readAsDataURL(file)
+    })
+  } 
 
   // #endregion   ---------------------------------------------------------------------------------
 

@@ -33,6 +33,10 @@
     border-bottom: 7px solid transparent;
 }
 
+table {
+    width: 100%;
+}
+
 .form-wide {
     width: 100%;
 }
@@ -49,4 +53,13 @@ label {
 
 td {
     padding: 2px;
+}
+
+.image-file-area {
+    display: flex;
+    flex-flow: column;
+    img {
+        max-width: 400px;
+        max-height: 300px;
+    }
 }

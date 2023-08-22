@@ -132,6 +132,7 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
       { label: 'roomAccessMng.entryDateTime', value: data?.entry_dt,    inputtype: InputType.DateTime,  required: true,   placeholder: '2020/01/01 09:00' },
       { label: 'roomAccessMng.exitDateTime',  value: data?.exit_dt,     inputtype: InputType.DateTime,  required: false,  placeholder: '2020/01/02 18:00' },
       { label: 'note',                        value: data?.note,        inputtype: InputType.TextArea,  required: false,  placeholder: '' },
+      { label: 'roomAccessMng.imageFile',     value: data?.image_file,  inputtype: InputType.ImageFile, required: false,  maxsize: 1 },
     ];
     dialog.buttons = [
       { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },
@@ -167,13 +168,14 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
       const entry_dt = dialog.items[2].value;
       const exit_dt = dialog.items[3].value;
       const note = dialog.items[4].value;
-
+      const imageFile = dialog.items[5].value;
+  
       // 追加/更新のクエリを実行
       let body;
       if (data) {
-        body = { sql: 'RoomAccessMng/updRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note, data.id] };
+        body = { sql: 'RoomAccessMng/updRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note, imageFile, data.id] };
       } else {
-        body = { sql: 'RoomAccessMng/addRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note] };
+        body = { sql: 'RoomAccessMng/addRoomAccessMng.sql', values: [room_cd, user_id, entry_dt, exit_dt, note, imageFile] };
       }
       const ret: any = await this.http.post('api/query', body);
       if (ret.message !== null) {
@@ -183,6 +185,8 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
 
       dialog.close('ok');
 
+    } catch (e: any) {
+      alert('Register room access datetime failed.\n' + JSON.stringify(e.error));
     } finally {
       // stop spinner
       this.spinner.close();
