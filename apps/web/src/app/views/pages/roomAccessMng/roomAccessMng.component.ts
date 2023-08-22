@@ -127,11 +127,11 @@ export class RoomAccessMngComponent implements OnInit, AfterViewInit {
     dialog.title = 'roomAccessMng.register';
     dialog.message = '';
     dialog.items = [
-      { label: 'roomAccessMng.room', value: data?.room_cd, inputtype: InputType.Select, required: true, selectList : Enums.Rooms },
-      { label: 'roomAccessMng.user', value: data?.user_id, inputtype: InputType.Select, required: true, selectList : this.userList },
-      { label: 'roomAccessMng.entryDateTime', value: data?.entry_dt, inputtype: InputType.DateTime, required: true, placeholder: '2020/01/01 09:00' },
-      { label: 'roomAccessMng.exitDateTime', value: data?.exit_dt, inputtype: InputType.DateTime, required: false, placeholder: '2020/01/02 18:00' },
-      { label: 'note', value: data?.note, inputtype: InputType.TextArea, required: false, placeholder: '' },
+      { label: 'roomAccessMng.room',          value: data?.room_cd,     inputtype: InputType.Select,    required: true,   selectList : Enums.Rooms },
+      { label: 'roomAccessMng.user',          value: data?.user_id,     inputtype: InputType.Select3,   required: true,   selectList : this.userList },
+      { label: 'roomAccessMng.entryDateTime', value: data?.entry_dt,    inputtype: InputType.DateTime,  required: true,   placeholder: '2020/01/01 09:00' },
+      { label: 'roomAccessMng.exitDateTime',  value: data?.exit_dt,     inputtype: InputType.DateTime,  required: false,  placeholder: '2020/01/02 18:00' },
+      { label: 'note',                        value: data?.note,        inputtype: InputType.TextArea,  required: false,  placeholder: '' },
     ];
     dialog.buttons = [
       { class: 'btn-left',                    name: 'cancel', click: async () => { dialog.close('cancel'); } },

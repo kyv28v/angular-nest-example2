@@ -22,6 +22,7 @@ export namespace InputType {
   export const Time = 'time';
   export const Select = 'select';
   export const Select2 = 'select2';
+  export const Select3 = 'select3';
   export const Radio = 'radio';
   export const Check = 'check';
   export const Color = 'color';
@@ -157,5 +158,33 @@ export class SimpleDialogComponent {
     }
     return ret;
   }
+
+  // #region リストボックスのフィルター関連   --------------------------------------------------------
+  // フィルターが入力されるたびに、リストボックスの内容を絞り込む
+  selectFilter(item: any): void {
+    console.log(`selectFilter(${item.selectListFilter})`)
+    item.filteredSelectList = item.selectList.filter((s: any) => s.name.toLowerCase().includes(item.selectListFilter || ''));
+  }
+
+  // リストボックスを選択したとき、内部のvalueとフィルターの表示文字を更新する。
+  selectChanged(item: any, data: any) {
+    console.log(`selectChanged(${data.option.value})`)
+    item.value = data.option.value;
+    item.selectListFilter = item.selectList.find((s: any) => s.id == item.value)?.name;
+  }
+
+  // フィルターに、選択中の文字を表示する。（編集の初期表示用）
+  getName(item: any) {
+    console.log(`getName(${item.value})`)
+    return item.selectList.find((s: any) => s.id == item.value)?.name;
+  }
+
+  // フィルターからフォーカスアウトしたとき、フィルターに表示されている文字を元に戻す。
+  selectFilterCancel(item: any) {
+    console.log(`selectFilterCancel(${item.value})`)
+    item.selectListFilter = item.selectList.find((s: any) => s.id == item.value)?.name;
+  }
+
+  // #endregion   ---------------------------------------------------------------------------------
 
 }

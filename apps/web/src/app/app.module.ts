@@ -9,6 +9,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserModule } from '@angular/platform-browser';
@@ -82,6 +83,7 @@ registerLocaleData(localeJa);
         MatIconModule,
         MatDialogModule,
         MatProgressSpinnerModule,
+        MatAutocompleteModule,
         DragDropModule,
         HttpClientModule,
         TranslateModule.forRoot({

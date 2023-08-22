@@ -196,6 +196,31 @@
               </option>
             </select>
           </td>
+          <!-- リストボックス3(フィルター機能あり) -->
+          <td *ngIf="item.inputtype == 'select3'">
+            <input
+              class="form-control form-wide"
+              type="text"
+              name="item_value"
+              [(ngModel)]="item.selectListFilter"
+              placeholder={{item.placeholder}}
+              [matAutocomplete]="auto"
+              (keyup)="item.validateMessage = null;"
+              (input)="selectFilter(item)"
+              (focus)="selectFilter(item)"
+              (blur)="selectFilterCancel(item)"
+            >
+
+            <mat-autocomplete requireSelection
+              #auto="matAutocomplete"
+              [displayWith]="getName.bind(this, item)"
+              (optionSelected)="selectChanged(item, $event)"
+            >
+              <mat-option *ngFor="let data of item.filteredSelectList" value={{data.id}}>
+                {{data.id}}:{{ data.name | translate }}
+              </mat-option>
+            </mat-autocomplete>
+          </td>
           <!-- ラジオボタン -->
           <td *ngIf="item.inputtype == 'radio'">
             <ng-container *ngFor="let data of item.selectList; index as i">
