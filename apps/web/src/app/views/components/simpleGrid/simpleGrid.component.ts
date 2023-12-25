@@ -79,20 +79,20 @@ export class SimpleGridComponent implements OnChanges {
 
   // テーブルの列幅を変更したとき、幅をローカルストレージに保存する。
   // ※ 何度も実行されてしまわないよう、500msの間イベントが来ていなかったら実行する。
-  lastEvent: any = null;
+  static lastEvent: any = null;     // Grid画面からGrid画面に遷移したときも排他がかかるように、static変数にする。
   onResized(event: ResizedEvent) {
     // 最後のイベントを保持
     var lastEvent = {
       time: new Date(),
       event: event,
     }
-    this.lastEvent = lastEvent;
+    SimpleGridComponent.lastEvent = lastEvent;
   
     // 500ms待機してから処理を呼び出す
     var self = this;
     setTimeout(function() {
       // すでに次のイベントが来ていたら何もせず終了
-      if (self.lastEvent && lastEvent.time < self.lastEvent.time) return;
+      if (SimpleGridComponent.lastEvent && lastEvent.time < SimpleGridComponent.lastEvent.time) return;
 
       // 保存フラグ
       // ※ 初期表示時などに意図せずイベントが走ってしまうことがあるので、HTML要素が見つからない場合はOFFにする
@@ -112,7 +112,7 @@ export class SimpleGridComponent implements OnChanges {
       }
 
       // イベントをクリア
-      self.lastEvent = null;
+      SimpleGridComponent.lastEvent = null;
     }, 500);
   }
 
